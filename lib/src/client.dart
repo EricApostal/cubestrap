@@ -1,6 +1,47 @@
+import 'dart:io';
+import 'package:oauth2/oauth2.dart' as oauth2;
+
 class XboxClient {
-  Future<void> authenticate({
-    required String username,
-    required String password,
-  }) async {}
+  Future<oauth2.Client> authenticate() async {
+    // stolen from prism launcher for now
+    // only for testing, will remove as soon as
+    // microsoft approves mine
+    final clientId = "c36a9fb6-4f2a-41ff-90bd-ae7cc92031eb";
+    final authorizationEndpoint = Uri.parse(
+      'https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize',
+    );
+    final accessTokenUrl = Uri.parse(
+      "https://login.microsoftonline.com/consumers/oauth2/v2.0/token",
+    );
+    final scopes = ["XboxLive.SignIn", "XboxLive.offline_access"];
+    final redirectUrl = Uri.parse("http://localhost:8080");
+
+    final grant = oauth2.AuthorizationCodeGrant(
+      clientId,
+      authorizationEndpoint,
+      accessTokenUrl,
+    );
+
+    final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 8080);
+
+    final authUrl = grant.getAuthorizationUrl(redirectUrl, scopes: scopes);
+
+    print("Please go to the following URL to authenticate:");
+    print(authUrl);
+    print("");
+
+    final request = await server.first;
+    final params = request.uri.queryParameters;
+
+    request.response
+      ..statusCode = 200
+      ..headers.contentType = ContentType.html
+      ..write(
+        "<html><body><h1>You can close this window now.</h1></body></html>",
+      );
+    await request.response.close();
+    await server.close();
+
+    return await grant.handleAuthorizationResponse(params);
+  }
 }
