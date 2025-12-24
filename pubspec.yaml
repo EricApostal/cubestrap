@@ -39,8 +39,12 @@ dependencies:
   url_launcher: ^6.3.2
   dart_mappable: ^4.6.1
   dio: ^5.9.0
-  flutter_riverpod: ^2.6.1
-  riverpod_annotation: ^2.6.1
+  flutter_riverpod: ^3.0.3
+  riverpod_annotation: ^3.0.3
+  modrinth_dart_api:
+    path:
+      packages/modrinth/modrinth_dart_api
+
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +58,7 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   build_runner: ^2.10.4
   dart_mappable_builder: ^4.6.3
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
