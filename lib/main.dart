@@ -3,16 +3,16 @@ import 'package:cubestrap/features/xbox/repositories/xbox_client.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Cubestrap());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Cubestrap extends StatelessWidget {
+  const Cubestrap({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Balls",
+      title: "Cubestrap",
       theme: ThemeData(
         colorScheme: .fromSeed(
           seedColor: const Color.fromARGB(255, 31, 62, 128),
