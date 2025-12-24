@@ -14,7 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Balls",
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+      theme: ThemeData(
+        colorScheme: .fromSeed(
+          seedColor: const Color.fromARGB(255, 31, 62, 128),
+          brightness: .dark,
+        ),
+      ),
       home: const MyHomePage(),
     );
   }
@@ -29,9 +34,17 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         child: FilledButton(
           onPressed: () async {
+            // authenticate with live
             final xboxClient = await XboxClient.authenticate();
             final ticket = xboxClient.credentials.accessToken;
-            final dio = Dio();
+            final dio = Dio(
+              BaseOptions(
+                headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json",
+                },
+              ),
+            );
             final body = XboxLiveAuthenticate(
               tokenType: .jwt,
               relyingParty: "http://auth.xboxlive.com",
@@ -45,15 +58,30 @@ class MyHomePage extends StatelessWidget {
             final response = await dio.post(
               "https://user.auth.xboxlive.com/user/authenticate",
               data: body,
-              options: Options(
-                headers: {
-                  "Content-Type": "application/json",
-                  "Accept": "application/json",
-                },
-              ),
             );
+            final authentication = XboxLiveAuthenticationResponseMapper.fromMap(
+              response.data,
+            );
+            final xbl = authentication.displayClaims.xui.first.uhs;
+
+            final minecraftBody = XboxLiveAuthenticate(
+              tokenType: .jwt,
+              relyingParty: "rp://api.minecraftservices.com/",
+              properties: XboxLiveAuthenticateProperties(
+                sandboxId: "RETAIL",
+                userTokens: [xbl],
+              ),
+            ).toJson();
+            print(minecraftBody);
+
+            // authenticate with minecraft
+            final minecraftResponse = await dio.post(
+              "https://xsts.auth.xboxlive.com/xsts/authorize",
+              data: minecraftBody,
+            );
+            // print(minecraftResponse);
           },
-          child: Text("erm"),
+          child: Text("Authenticate"),
         ),
       ),
     );

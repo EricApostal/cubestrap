@@ -20,16 +20,21 @@ class XboxLiveAuthenticate with XboxLiveAuthenticateMappable {
   });
 }
 
-@MappableClass(caseStyle: CaseStyle.pascalCase)
+@MappableClass(caseStyle: CaseStyle.pascalCase, ignoreNull: true)
 class XboxLiveAuthenticateProperties
     with XboxLiveAuthenticatePropertiesMappable {
-  final AuthMethod authMethod;
-  final String siteName;
-  final String rpsTicket;
+  final AuthMethod? authMethod;
+  final String? siteName;
+  final String? rpsTicket;
+  final String? sandboxId;
+  final List<String>? userTokens;
+
   const XboxLiveAuthenticateProperties({
-    required this.authMethod,
-    required this.siteName,
-    required this.rpsTicket,
+    this.authMethod,
+    this.siteName,
+    this.rpsTicket,
+    this.sandboxId,
+    this.userTokens,
   });
 }
 

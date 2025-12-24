@@ -284,29 +284,47 @@ class XboxLiveAuthenticatePropertiesMapper
   @override
   final String id = 'XboxLiveAuthenticateProperties';
 
-  static AuthMethod _$authMethod(XboxLiveAuthenticateProperties v) =>
+  static AuthMethod? _$authMethod(XboxLiveAuthenticateProperties v) =>
       v.authMethod;
   static const Field<XboxLiveAuthenticateProperties, AuthMethod> _f$authMethod =
-      Field('authMethod', _$authMethod, key: r'AuthMethod');
-  static String _$siteName(XboxLiveAuthenticateProperties v) => v.siteName;
+      Field('authMethod', _$authMethod, key: r'AuthMethod', opt: true);
+  static String? _$siteName(XboxLiveAuthenticateProperties v) => v.siteName;
   static const Field<XboxLiveAuthenticateProperties, String> _f$siteName =
-      Field('siteName', _$siteName, key: r'SiteName');
-  static String _$rpsTicket(XboxLiveAuthenticateProperties v) => v.rpsTicket;
+      Field('siteName', _$siteName, key: r'SiteName', opt: true);
+  static String? _$rpsTicket(XboxLiveAuthenticateProperties v) => v.rpsTicket;
   static const Field<XboxLiveAuthenticateProperties, String> _f$rpsTicket =
-      Field('rpsTicket', _$rpsTicket, key: r'RpsTicket');
+      Field('rpsTicket', _$rpsTicket, key: r'RpsTicket', opt: true);
+  static String? _$sandboxId(XboxLiveAuthenticateProperties v) => v.sandboxId;
+  static const Field<XboxLiveAuthenticateProperties, String> _f$sandboxId =
+      Field('sandboxId', _$sandboxId, key: r'SandboxId', opt: true);
+  static List<String>? _$userTokens(XboxLiveAuthenticateProperties v) =>
+      v.userTokens;
+  static const Field<XboxLiveAuthenticateProperties, List<String>>
+  _f$userTokens = Field(
+    'userTokens',
+    _$userTokens,
+    key: r'UserTokens',
+    opt: true,
+  );
 
   @override
   final MappableFields<XboxLiveAuthenticateProperties> fields = const {
     #authMethod: _f$authMethod,
     #siteName: _f$siteName,
     #rpsTicket: _f$rpsTicket,
+    #sandboxId: _f$sandboxId,
+    #userTokens: _f$userTokens,
   };
+  @override
+  final bool ignoreNull = true;
 
   static XboxLiveAuthenticateProperties _instantiate(DecodingData data) {
     return XboxLiveAuthenticateProperties(
       authMethod: data.dec(_f$authMethod),
       siteName: data.dec(_f$siteName),
       rpsTicket: data.dec(_f$rpsTicket),
+      sandboxId: data.dec(_f$sandboxId),
+      userTokens: data.dec(_f$userTokens),
     );
   }
 
@@ -388,7 +406,14 @@ abstract class XboxLiveAuthenticatePropertiesCopyWith<
   $Out
 >
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({AuthMethod? authMethod, String? siteName, String? rpsTicket});
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>? get userTokens;
+  $R call({
+    AuthMethod? authMethod,
+    String? siteName,
+    String? rpsTicket,
+    String? sandboxId,
+    List<String>? userTokens,
+  });
   XboxLiveAuthenticatePropertiesCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
     Then<$Out2, $R2> t,
   );
@@ -412,20 +437,38 @@ class _XboxLiveAuthenticatePropertiesCopyWithImpl<$R, $Out>
   late final ClassMapperBase<XboxLiveAuthenticateProperties> $mapper =
       XboxLiveAuthenticatePropertiesMapper.ensureInitialized();
   @override
-  $R call({AuthMethod? authMethod, String? siteName, String? rpsTicket}) =>
-      $apply(
-        FieldCopyWithData({
-          if (authMethod != null) #authMethod: authMethod,
-          if (siteName != null) #siteName: siteName,
-          if (rpsTicket != null) #rpsTicket: rpsTicket,
-        }),
-      );
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
+  get userTokens => $value.userTokens != null
+      ? ListCopyWith(
+          $value.userTokens!,
+          (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(userTokens: v),
+        )
+      : null;
+  @override
+  $R call({
+    Object? authMethod = $none,
+    Object? siteName = $none,
+    Object? rpsTicket = $none,
+    Object? sandboxId = $none,
+    Object? userTokens = $none,
+  }) => $apply(
+    FieldCopyWithData({
+      if (authMethod != $none) #authMethod: authMethod,
+      if (siteName != $none) #siteName: siteName,
+      if (rpsTicket != $none) #rpsTicket: rpsTicket,
+      if (sandboxId != $none) #sandboxId: sandboxId,
+      if (userTokens != $none) #userTokens: userTokens,
+    }),
+  );
   @override
   XboxLiveAuthenticateProperties $make(CopyWithData data) =>
       XboxLiveAuthenticateProperties(
         authMethod: data.get(#authMethod, or: $value.authMethod),
         siteName: data.get(#siteName, or: $value.siteName),
         rpsTicket: data.get(#rpsTicket, or: $value.rpsTicket),
+        sandboxId: data.get(#sandboxId, or: $value.sandboxId),
+        userTokens: data.get(#userTokens, or: $value.userTokens),
       );
 
   @override

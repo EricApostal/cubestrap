@@ -7,7 +7,7 @@ class XboxClient {
     // stolen from prism launcher for now
     // only for testing, will remove as soon as
     // microsoft approves mine
-    final clientId = "";
+    final clientId = "c36a9fb6-4f2a-41ff-90bd-ae7cc92031eb";
     final authorizationEndpoint = Uri.parse(
       'https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize',
     );
