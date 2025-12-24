@@ -24,6 +24,7 @@ dev_dependencies:
   retrofit_generator: ^10.2.1
   dart_mappable_builder: ^4.6.3
   build_runner: ^2.10.4
+  swagger_parser: ^1.37.1
 
 dependency_overrides: 
   retrofit:

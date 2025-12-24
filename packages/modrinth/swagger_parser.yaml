@@ -1,0 +1,4 @@
+swagger_parser:
+  schema_url: https://raw.githubusercontent.com/modrinth/code/refs/heads/main/apps/docs/public/openapi.yaml
+  json_serializer: dart_mappable
+  output_directory: lib/api
