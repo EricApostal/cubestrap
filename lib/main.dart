@@ -62,7 +62,7 @@ class MyHomePage extends StatelessWidget {
             final authentication = XboxLiveAuthenticationResponseMapper.fromMap(
               response.data,
             );
-            final xbl = authentication.displayClaims.xui.first.uhs;
+            final xbl = authentication.token;
 
             final minecraftBody = XboxLiveAuthenticate(
               tokenType: .jwt,
@@ -72,14 +72,13 @@ class MyHomePage extends StatelessWidget {
                 userTokens: [xbl],
               ),
             ).toJson();
-            print(minecraftBody);
 
             // authenticate with minecraft
             final minecraftResponse = await dio.post(
               "https://xsts.auth.xboxlive.com/xsts/authorize",
               data: minecraftBody,
             );
-            // print(minecraftResponse);
+            print(minecraftResponse.statusCode);
           },
           child: Text("Authenticate"),
         ),
