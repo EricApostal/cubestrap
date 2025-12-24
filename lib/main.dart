@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:cubestrap/features/authentication/models/minecraft.dart';
 import 'package:cubestrap/features/authentication/models/xbox.dart';
 import 'package:cubestrap/features/authentication/repositories/xbox_client.dart';
 import 'package:dio/dio.dart';
@@ -63,6 +66,7 @@ class MyHomePage extends StatelessWidget {
               response.data,
             );
             final xbl = authentication.token;
+            final userHash = authentication.displayClaims.xui.first.uhs;
 
             final minecraftBody = XboxLiveAuthenticate(
               tokenType: .jwt,
@@ -78,7 +82,23 @@ class MyHomePage extends StatelessWidget {
               "https://xsts.auth.xboxlive.com/xsts/authorize",
               data: minecraftBody,
             );
-            print(minecraftResponse.statusCode);
+            final minecraftResponseData =
+                XboxLiveAuthenticationResponseMapper.fromMap(
+                  minecraftResponse.data,
+                );
+
+            final xstsToken = minecraftResponseData.token;
+
+            // now we can get the minecraft token
+            final mcTokenRaw = await dio.post(
+              "https://api.minecraftservices.com/authentication/login_with_xbox",
+              data: jsonEncode({
+                "identityToken": "XBL3.0 x=$userHash;$xstsToken",
+              }),
+            );
+            final mcToken = MinecraftAuthenticationResponseMapper.fromMap(
+              mcTokenRaw.data,
+            );
           },
           child: Text("Authenticate"),
         ),
