@@ -3,13 +3,12 @@ import 'package:dart_mappable/dart_mappable.dart';
 part 'minecraft.mapper.dart';
 
 @MappableClass(caseStyle: CaseStyle.snakeCase)
-class MinecraftAuthenticationResponse
-    with MinecraftAuthenticationResponseMappable {
+class MinecraftAuthenticationData with MinecraftAuthenticationDataMappable {
   final String username;
   final List<dynamic> roles;
   final String accessToken;
   final int expiresIn;
-  const MinecraftAuthenticationResponse({
+  const MinecraftAuthenticationData({
     required this.username,
     required this.roles,
     required this.accessToken,

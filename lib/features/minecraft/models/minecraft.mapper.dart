@@ -7,50 +7,51 @@
 
 part of 'minecraft.dart';
 
-class MinecraftAuthenticationResponseMapper
-    extends ClassMapperBase<MinecraftAuthenticationResponse> {
-  MinecraftAuthenticationResponseMapper._();
+class MinecraftAuthenticationDataMapper
+    extends ClassMapperBase<MinecraftAuthenticationData> {
+  MinecraftAuthenticationDataMapper._();
 
-  static MinecraftAuthenticationResponseMapper? _instance;
-  static MinecraftAuthenticationResponseMapper ensureInitialized() {
+  static MinecraftAuthenticationDataMapper? _instance;
+  static MinecraftAuthenticationDataMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(
-        _instance = MinecraftAuthenticationResponseMapper._(),
+        _instance = MinecraftAuthenticationDataMapper._(),
       );
     }
     return _instance!;
   }
 
   @override
-  final String id = 'MinecraftAuthenticationResponse';
+  final String id = 'MinecraftAuthenticationData';
 
-  static String _$username(MinecraftAuthenticationResponse v) => v.username;
-  static const Field<MinecraftAuthenticationResponse, String> _f$username =
-      Field('username', _$username);
-  static List<dynamic> _$roles(MinecraftAuthenticationResponse v) => v.roles;
-  static const Field<MinecraftAuthenticationResponse, List<dynamic>> _f$roles =
+  static String _$username(MinecraftAuthenticationData v) => v.username;
+  static const Field<MinecraftAuthenticationData, String> _f$username = Field(
+    'username',
+    _$username,
+  );
+  static List<dynamic> _$roles(MinecraftAuthenticationData v) => v.roles;
+  static const Field<MinecraftAuthenticationData, List<dynamic>> _f$roles =
       Field('roles', _$roles);
-  static String _$accessToken(MinecraftAuthenticationResponse v) =>
-      v.accessToken;
-  static const Field<MinecraftAuthenticationResponse, String> _f$accessToken =
+  static String _$accessToken(MinecraftAuthenticationData v) => v.accessToken;
+  static const Field<MinecraftAuthenticationData, String> _f$accessToken =
       Field('accessToken', _$accessToken, key: r'access_token');
-  static int _$expiresIn(MinecraftAuthenticationResponse v) => v.expiresIn;
-  static const Field<MinecraftAuthenticationResponse, int> _f$expiresIn = Field(
+  static int _$expiresIn(MinecraftAuthenticationData v) => v.expiresIn;
+  static const Field<MinecraftAuthenticationData, int> _f$expiresIn = Field(
     'expiresIn',
     _$expiresIn,
     key: r'expires_in',
   );
 
   @override
-  final MappableFields<MinecraftAuthenticationResponse> fields = const {
+  final MappableFields<MinecraftAuthenticationData> fields = const {
     #username: _f$username,
     #roles: _f$roles,
     #accessToken: _f$accessToken,
     #expiresIn: _f$expiresIn,
   };
 
-  static MinecraftAuthenticationResponse _instantiate(DecodingData data) {
-    return MinecraftAuthenticationResponse(
+  static MinecraftAuthenticationData _instantiate(DecodingData data) {
+    return MinecraftAuthenticationData(
       username: data.dec(_f$username),
       roles: data.dec(_f$roles),
       accessToken: data.dec(_f$accessToken),
@@ -61,78 +62,74 @@ class MinecraftAuthenticationResponseMapper
   @override
   final Function instantiate = _instantiate;
 
-  static MinecraftAuthenticationResponse fromMap(Map<String, dynamic> map) {
-    return ensureInitialized().decodeMap<MinecraftAuthenticationResponse>(map);
+  static MinecraftAuthenticationData fromMap(Map<String, dynamic> map) {
+    return ensureInitialized().decodeMap<MinecraftAuthenticationData>(map);
   }
 
-  static MinecraftAuthenticationResponse fromJson(String json) {
-    return ensureInitialized().decodeJson<MinecraftAuthenticationResponse>(
-      json,
-    );
+  static MinecraftAuthenticationData fromJson(String json) {
+    return ensureInitialized().decodeJson<MinecraftAuthenticationData>(json);
   }
 }
 
-mixin MinecraftAuthenticationResponseMappable {
+mixin MinecraftAuthenticationDataMappable {
   String toJson() {
-    return MinecraftAuthenticationResponseMapper.ensureInitialized()
-        .encodeJson<MinecraftAuthenticationResponse>(
-          this as MinecraftAuthenticationResponse,
+    return MinecraftAuthenticationDataMapper.ensureInitialized()
+        .encodeJson<MinecraftAuthenticationData>(
+          this as MinecraftAuthenticationData,
         );
   }
 
   Map<String, dynamic> toMap() {
-    return MinecraftAuthenticationResponseMapper.ensureInitialized()
-        .encodeMap<MinecraftAuthenticationResponse>(
-          this as MinecraftAuthenticationResponse,
+    return MinecraftAuthenticationDataMapper.ensureInitialized()
+        .encodeMap<MinecraftAuthenticationData>(
+          this as MinecraftAuthenticationData,
         );
   }
 
-  MinecraftAuthenticationResponseCopyWith<
-    MinecraftAuthenticationResponse,
-    MinecraftAuthenticationResponse,
-    MinecraftAuthenticationResponse
+  MinecraftAuthenticationDataCopyWith<
+    MinecraftAuthenticationData,
+    MinecraftAuthenticationData,
+    MinecraftAuthenticationData
   >
   get copyWith =>
-      _MinecraftAuthenticationResponseCopyWithImpl<
-        MinecraftAuthenticationResponse,
-        MinecraftAuthenticationResponse
-      >(this as MinecraftAuthenticationResponse, $identity, $identity);
+      _MinecraftAuthenticationDataCopyWithImpl<
+        MinecraftAuthenticationData,
+        MinecraftAuthenticationData
+      >(this as MinecraftAuthenticationData, $identity, $identity);
   @override
   String toString() {
-    return MinecraftAuthenticationResponseMapper.ensureInitialized()
-        .stringifyValue(this as MinecraftAuthenticationResponse);
+    return MinecraftAuthenticationDataMapper.ensureInitialized().stringifyValue(
+      this as MinecraftAuthenticationData,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return MinecraftAuthenticationResponseMapper.ensureInitialized()
-        .equalsValue(this as MinecraftAuthenticationResponse, other);
+    return MinecraftAuthenticationDataMapper.ensureInitialized().equalsValue(
+      this as MinecraftAuthenticationData,
+      other,
+    );
   }
 
   @override
   int get hashCode {
-    return MinecraftAuthenticationResponseMapper.ensureInitialized().hashValue(
-      this as MinecraftAuthenticationResponse,
+    return MinecraftAuthenticationDataMapper.ensureInitialized().hashValue(
+      this as MinecraftAuthenticationData,
     );
   }
 }
 
-extension MinecraftAuthenticationResponseValueCopy<$R, $Out>
-    on ObjectCopyWith<$R, MinecraftAuthenticationResponse, $Out> {
-  MinecraftAuthenticationResponseCopyWith<
-    $R,
-    MinecraftAuthenticationResponse,
-    $Out
-  >
-  get $asMinecraftAuthenticationResponse => $base.as(
-    (v, t, t2) =>
-        _MinecraftAuthenticationResponseCopyWithImpl<$R, $Out>(v, t, t2),
+extension MinecraftAuthenticationDataValueCopy<$R, $Out>
+    on ObjectCopyWith<$R, MinecraftAuthenticationData, $Out> {
+  MinecraftAuthenticationDataCopyWith<$R, MinecraftAuthenticationData, $Out>
+  get $asMinecraftAuthenticationData => $base.as(
+    (v, t, t2) => _MinecraftAuthenticationDataCopyWithImpl<$R, $Out>(v, t, t2),
   );
 }
 
-abstract class MinecraftAuthenticationResponseCopyWith<
+abstract class MinecraftAuthenticationDataCopyWith<
   $R,
-  $In extends MinecraftAuthenticationResponse,
+  $In extends MinecraftAuthenticationData,
   $Out
 >
     implements ClassCopyWith<$R, $In, $Out> {
@@ -143,28 +140,28 @@ abstract class MinecraftAuthenticationResponseCopyWith<
     String? accessToken,
     int? expiresIn,
   });
-  MinecraftAuthenticationResponseCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
+  MinecraftAuthenticationDataCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
     Then<$Out2, $R2> t,
   );
 }
 
-class _MinecraftAuthenticationResponseCopyWithImpl<$R, $Out>
-    extends ClassCopyWithBase<$R, MinecraftAuthenticationResponse, $Out>
+class _MinecraftAuthenticationDataCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, MinecraftAuthenticationData, $Out>
     implements
-        MinecraftAuthenticationResponseCopyWith<
+        MinecraftAuthenticationDataCopyWith<
           $R,
-          MinecraftAuthenticationResponse,
+          MinecraftAuthenticationData,
           $Out
         > {
-  _MinecraftAuthenticationResponseCopyWithImpl(
+  _MinecraftAuthenticationDataCopyWithImpl(
     super.value,
     super.then,
     super.then2,
   );
 
   @override
-  late final ClassMapperBase<MinecraftAuthenticationResponse> $mapper =
-      MinecraftAuthenticationResponseMapper.ensureInitialized();
+  late final ClassMapperBase<MinecraftAuthenticationData> $mapper =
+      MinecraftAuthenticationDataMapper.ensureInitialized();
   @override
   ListCopyWith<$R, dynamic, ObjectCopyWith<$R, dynamic, dynamic>> get roles =>
       ListCopyWith(
@@ -187,8 +184,8 @@ class _MinecraftAuthenticationResponseCopyWithImpl<$R, $Out>
     }),
   );
   @override
-  MinecraftAuthenticationResponse $make(CopyWithData data) =>
-      MinecraftAuthenticationResponse(
+  MinecraftAuthenticationData $make(CopyWithData data) =>
+      MinecraftAuthenticationData(
         username: data.get(#username, or: $value.username),
         roles: data.get(#roles, or: $value.roles),
         accessToken: data.get(#accessToken, or: $value.accessToken),
@@ -196,17 +193,9 @@ class _MinecraftAuthenticationResponseCopyWithImpl<$R, $Out>
       );
 
   @override
-  MinecraftAuthenticationResponseCopyWith<
-    $R2,
-    MinecraftAuthenticationResponse,
-    $Out2
-  >
+  MinecraftAuthenticationDataCopyWith<$R2, MinecraftAuthenticationData, $Out2>
   $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
-      _MinecraftAuthenticationResponseCopyWithImpl<$R2, $Out2>(
-        $value,
-        $cast,
-        t,
-      );
+      _MinecraftAuthenticationDataCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
 
 class MinecraftEntitlementResponseMapper

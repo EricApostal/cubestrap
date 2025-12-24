@@ -1,15 +1,16 @@
 import 'dart:convert';
 
 import 'package:cubestrap/features/minecraft/models/minecraft.dart';
+import 'package:cubestrap/features/minecraft/repositories/minecraft_client.dart';
 import 'package:cubestrap/features/xbox/models/xbox.dart';
-import 'package:cubestrap/features/xbox/repositories/xbox_client.dart';
 import 'package:dio/dio.dart';
 
 class MinecraftAuthentication {
-  static Future<void> authenticate() async {
+  static Future<MinecraftClient> authenticate({
+    required String accessToken,
+  }) async {
     // authenticate with live
-    final xboxClient = await XboxClient.authenticate();
-    final ticket = xboxClient.credentials.accessToken;
+
     final dio = Dio(
       BaseOptions(
         headers: {
@@ -24,7 +25,7 @@ class MinecraftAuthentication {
       properties: XboxLiveAuthenticateProperties(
         authMethod: .rps,
         siteName: "user.auth.xboxlive.com",
-        rpsTicket: "d=$ticket",
+        rpsTicket: "d=$accessToken",
       ),
     ).toJson();
 
@@ -63,9 +64,7 @@ class MinecraftAuthentication {
       "https://api.minecraftservices.com/authentication/login_with_xbox",
       data: jsonEncode({"identityToken": "XBL3.0 x=$userHash;$xstsToken"}),
     );
-    final mcToken = MinecraftAuthenticationResponseMapper.fromMap(
-      mcIdentity.data,
-    );
+    final mcToken = MinecraftAuthenticationDataMapper.fromMap(mcIdentity.data);
 
     // aight it's close, now all I need is the profile info and such
 
@@ -85,6 +84,7 @@ class MinecraftAuthentication {
       "https://api.minecraftservices.com/minecraft/profile",
     );
     final profile = MinecraftProfileMapper.fromMap(rawProfile.data);
-    print("got profile = $profile");
+
+    return MinecraftClient(profile: profile, authenticationData: mcToken);
   }
 }
