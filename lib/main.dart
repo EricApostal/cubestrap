@@ -1,3 +1,4 @@
+import 'package:cubestrap/features/minecraft/repositories/authentication.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -30,7 +31,9 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: FilledButton(
-          onPressed: () async {},
+          onPressed: () async {
+            await MinecraftAuthentication.authenticate();
+          },
           child: Text("Authenticate"),
         ),
       ),

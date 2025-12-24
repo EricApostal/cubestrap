@@ -59,14 +59,32 @@ class MinecraftAuthentication {
     final xstsToken = minecraftResponseData.token;
 
     // now we can get the minecraft token
-    final mcTokenRaw = await dio.post(
+    final mcIdentity = await dio.post(
       "https://api.minecraftservices.com/authentication/login_with_xbox",
       data: jsonEncode({"identityToken": "XBL3.0 x=$userHash;$xstsToken"}),
     );
     final mcToken = MinecraftAuthenticationResponseMapper.fromMap(
-      mcTokenRaw.data,
+      mcIdentity.data,
     );
 
     // aight it's close, now all I need is the profile info and such
+
+    // check game ownership
+    final mcDio = Dio(
+      BaseOptions(headers: {"Authorization": "Bearer ${mcToken.accessToken}"}),
+    );
+
+    // final ownedItemsRaw = await mcDio.get(
+    //   "https://api.minecraftservices.com/entitlements/mcstore",
+    // );
+    // final entitlements = MinecraftEntitlementResponseMapper.fromMap(
+    //   ownedItemsRaw.data,
+    // );
+
+    final rawProfile = await mcDio.get(
+      "https://api.minecraftservices.com/minecraft/profile",
+    );
+    final profile = MinecraftProfileMapper.fromMap(rawProfile.data);
+    print("got profile = $profile");
   }
 }
