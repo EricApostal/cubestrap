@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cubestrap/features/launcher/services/launcher.dart';
 import 'package:cubestrap/features/minecraft/providers/version_manifest.dart';
 import 'package:cubestrap/features/minecraft/repositories/minecraft.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -61,6 +62,17 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           children: [
             FilledButton(
               onPressed: () async {
+                final manifest = await ref.read(
+                  minecraftManifestProvider.future,
+                );
+                final details = await ref.read(
+                  minecraftVersionDetailsProvider(
+                    manifest.versions.first,
+                  ).future,
+                );
+
+                await LauncherService.downloadLibraries(details.libraries);
+
                 // final xboxClient = await XboxClient.authenticate();
                 // final auth = Hive.box('auth');
                 // await auth.put(
@@ -68,7 +80,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 //   xboxClient.credentials.accessToken,
                 // );
 
-                _genLaunchArgs();
+                // _genLaunchArgs();
               },
               child: Text("Authenticate"),
             ),
