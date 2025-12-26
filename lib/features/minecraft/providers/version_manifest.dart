@@ -16,7 +16,7 @@ Future<VersionDetails> minecraftVersionDetails(
   Ref ref,
   VersionManfiestEntry entry,
 ) async {
-  final accessToken = dotenv.env['MINECRAFT_ACCESS_TOKEN'] ?? "";
+  final accessToken = dotenv.env['MINECRAFT_ACCESS_TOKEN']!;
   final minecraftClient = await MinecraftAuthentication.authenticate(
     accessToken: accessToken,
   );

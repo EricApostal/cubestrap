@@ -2,11 +2,13 @@ import 'package:cubestrap/features/minecraft/models/launch.dart';
 import 'package:cubestrap/features/minecraft/providers/version_manifest.dart';
 import 'package:cubestrap/features/minecraft/repositories/authentication.dart';
 import 'package:cubestrap/features/xbox/repositories/xbox_client.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:modrinth/modrinth.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const Cubestrap());
 }
 
@@ -49,6 +51,12 @@ class MyHomePage extends ConsumerWidget {
           children: [
             FilledButton(
               onPressed: () async {
+                final accessToken = dotenv.env['MINECRAFT_ACCESS_TOKEN']!;
+                final minecraftClient =
+                    await MinecraftAuthentication.authenticate(
+                      accessToken: accessToken,
+                    );
+
                 // final xboxClient = await XboxClient.authenticate();
                 // print("client = ${xboxClient.credentials.accessToken}");
 

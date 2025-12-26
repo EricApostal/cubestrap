@@ -107,7 +107,7 @@ final class MinecraftVersionDetailsProvider
 }
 
 String _$minecraftVersionDetailsHash() =>
-    r'5705943e0718ed36e3e0bdfdeaa117d27412e004';
+    r'c2108d05388c4f0c5a5bac0d98a8275427d6d2b3';
 
 final class MinecraftVersionDetailsFamily extends $Family
     with
