@@ -1,11 +1,9 @@
-import 'package:cubestrap/features/minecraft/models/launch.dart';
 import 'package:cubestrap/features/minecraft/providers/version_manifest.dart';
 import 'package:cubestrap/features/minecraft/repositories/authentication.dart';
-import 'package:cubestrap/features/xbox/repositories/xbox_client.dart';
+import 'package:cubestrap/features/minecraft/repositories/minecraft.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:modrinth/modrinth.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
@@ -30,20 +28,16 @@ class Cubestrap extends StatelessWidget {
   }
 }
 
-class MyHomePage extends ConsumerWidget {
+class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final manifest = ref.watch(minecraftManifestProvider).value;
-    if (manifest != null) {
-      final details = ref.watch(
-        minecraftVersionDetailsProvider(manifest.versions.first),
-      );
-      // print(details);
-    }
-    // print(details.value?.arguments?.game);
+  ConsumerState<MyHomePage> createState() => _MyHomePageState();
+}
 
+class _MyHomePageState extends ConsumerState<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
@@ -51,11 +45,12 @@ class MyHomePage extends ConsumerWidget {
           children: [
             FilledButton(
               onPressed: () async {
-                final accessToken = dotenv.env['MINECRAFT_ACCESS_TOKEN']!;
-                final minecraftClient =
-                    await MinecraftAuthentication.authenticate(
-                      accessToken: accessToken,
-                    );
+                _genLaunchArgs();
+                // final accessToken = dotenv.env['MINECRAFT_ACCESS_TOKEN']!;
+                // final minecraftClient =
+                //     await MinecraftAuthentication.authenticate(
+                //       accessToken: accessToken,
+                //     );
 
                 // final xboxClient = await XboxClient.authenticate();
                 // print("client = ${xboxClient.credentials.accessToken}");
@@ -72,5 +67,16 @@ class MyHomePage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  void _genLaunchArgs() async {
+    final manifest = await ref.read(minecraftManifestProvider.future);
+    final details = await ref.read(
+      minecraftVersionDetailsProvider(manifest.versions.first).future,
+    );
+    final args = MinecraftRepository.generateLaunchArguments(
+      details.arguments!,
+    );
+    print(args);
   }
 }

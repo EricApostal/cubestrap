@@ -23,6 +23,8 @@ class MinecraftRepository {
     final data = response.data as Map<String, dynamic>;
 
     final gameDir = "${Directory.current.path}/game";
+    await Directory(gameDir).create(recursive: true);
+
     final assetsDir = "$gameDir/assets";
     final nativesDir = "$gameDir/versions/${entry.id}/natives";
 
@@ -107,5 +109,14 @@ class MinecraftRepository {
     }
 
     return true;
+  }
+
+  static String generateLaunchArguments(VersionArguments arguments) {
+    String args = "";
+    for (final arg in arguments.game) {
+      args += arg.values.join(" ");
+      args += " ";
+    }
+    return args;
   }
 }

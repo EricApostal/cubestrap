@@ -128,6 +128,26 @@ class ArgumentHook extends MappingHook {
     }
     return value;
   }
+
+  @override
+  Object? afterDecode(Object? value) {
+    // assert(value is List<Argument>);
+    // final List<Argument> filtered = [];
+    // for (final argument in value as List<Argument>) {
+    //   if (argument.rules.isEmpty) {
+    //     filtered.add(argument);
+    //     continue;
+    //   }
+
+    //   for (final rule in argument.rules) {
+    //     if (rule.)
+    //   }
+    // }
+
+    // todo: actually handle platform specific args
+
+    return value;
+  }
 }
 
 @MappableClass()
