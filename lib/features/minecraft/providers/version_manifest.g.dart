@@ -63,7 +63,7 @@ final class MinecraftVersionDetailsProvider
     with $FutureModifier<VersionDetails>, $FutureProvider<VersionDetails> {
   const MinecraftVersionDetailsProvider._({
     required MinecraftVersionDetailsFamily super.from,
-    required String super.argument,
+    required VersionManfiestEntry super.argument,
   }) : super(
          retry: null,
          name: r'minecraftVersionDetailsProvider',
@@ -90,7 +90,7 @@ final class MinecraftVersionDetailsProvider
 
   @override
   FutureOr<VersionDetails> create(Ref ref) {
-    final argument = this.argument as String;
+    final argument = this.argument as VersionManfiestEntry;
     return minecraftVersionDetails(ref, argument);
   }
 
@@ -107,10 +107,14 @@ final class MinecraftVersionDetailsProvider
 }
 
 String _$minecraftVersionDetailsHash() =>
-    r'6b08a48443994b7acd98858ee00a3f4a62856519';
+    r'5705943e0718ed36e3e0bdfdeaa117d27412e004';
 
 final class MinecraftVersionDetailsFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<VersionDetails>, String> {
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<VersionDetails>,
+          VersionManfiestEntry
+        > {
   const MinecraftVersionDetailsFamily._()
     : super(
         retry: null,
@@ -120,11 +124,8 @@ final class MinecraftVersionDetailsFamily extends $Family
         isAutoDispose: true,
       );
 
-  MinecraftVersionDetailsProvider call(String versionDetailsUrl) =>
-      MinecraftVersionDetailsProvider._(
-        argument: versionDetailsUrl,
-        from: this,
-      );
+  MinecraftVersionDetailsProvider call(VersionManfiestEntry entry) =>
+      MinecraftVersionDetailsProvider._(argument: entry, from: this);
 
   @override
   String toString() => r'minecraftVersionDetailsProvider';

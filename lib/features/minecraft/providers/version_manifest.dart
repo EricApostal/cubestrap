@@ -1,6 +1,9 @@
 import 'package:cubestrap/features/minecraft/models/manifest.dart';
+import 'package:cubestrap/features/minecraft/repositories/authentication.dart';
 import 'package:cubestrap/features/minecraft/repositories/minecraft.dart';
+import 'package:cubestrap/features/minecraft/repositories/minecraft_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 part 'version_manifest.g.dart';
 
@@ -12,7 +15,15 @@ Future<MinecraftVersionManifest> minecraftManifest(Ref ref) async {
 @riverpod
 Future<VersionDetails> minecraftVersionDetails(
   Ref ref,
-  String versionDetailsUrl,
+  VersionManfiestEntry entry,
 ) async {
-  return await MinecraftRepository.fetchVersionDetails(versionDetailsUrl);
+  final accessToken = dotenv.env['MINECRAFT_ACCESS_TOKEN'] ?? "";
+  final minecraftClient = await MinecraftAuthentication.authenticate(
+    accessToken: accessToken,
+  );
+
+  return await MinecraftRepository.fetchVersionDetails(
+    entry,
+    client: minecraftClient,
+  );
 }

@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:cubestrap/features/minecraft/models/manifest.dart';
+import 'package:cubestrap/features/minecraft/repositories/minecraft_client.dart';
 import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
 
 class MinecraftRepository {
   static Future<MinecraftVersionManifest> fetchManifest() async {
@@ -11,10 +15,22 @@ class MinecraftRepository {
   }
 
   static Future<VersionDetails> fetchVersionDetails(
-    String versionDetailsUrl,
-  ) async {
+    VersionManfiestEntry entry, {
+    required MinecraftClient client,
+  }) async {
     final dio = Dio();
-    final response = await dio.get(versionDetailsUrl);
-    return VersionDetailsMapper.fromMap(response.data);
+    final response = await dio.get(entry.url);
+    final stringData = jsonEncode(response.data);
+
+    // todo: this is gonna be cringe
+    final parsedData = stringData
+        .replaceAll(r"${auth_player_name}", client.profile.name)
+        .replaceAll(r"${version_name}", entry.id)
+        .replaceAll(
+          r"${game_directory}",
+          (await getApplicationDocumentsDirectory()).path,
+        )
+        .replaceAll(r"${assets_root}", "");
+    return VersionDetailsMapper.fromJson(parsedData);
   }
 }

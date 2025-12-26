@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class XboxClient {
   static Future<oauth2.Client> authenticate() async {
     // only for testing, will remove as soon as
     // microsoft approves mine
-    final clientId = "";
+    final clientId = dotenv.env['XBOX_CLIENT_ID'] ?? "";
     final authorizationEndpoint = Uri.parse(
       'https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize',
     );

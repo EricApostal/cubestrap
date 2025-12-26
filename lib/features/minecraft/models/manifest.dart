@@ -39,7 +39,7 @@ class VersionManfiestEntry with VersionManfiestEntryMappable {
   });
 }
 
-@MappableClass()
+@MappableClass(hook: VersionDetailsHook())
 class VersionDetails with VersionDetailsMappable {
   final VersionArguments? arguments;
   final AssetIndex assetIndex;
@@ -72,6 +72,16 @@ class VersionDetails with VersionDetailsMappable {
     required this.time,
     required this.type,
   });
+}
+
+class VersionDetailsHook extends MappingHook {
+  const VersionDetailsHook();
+  @override
+  Object? beforeDecode(Object? value) {
+    // print("version details");
+    // print(value);
+    return value;
+  }
 }
 
 @MappableClass()

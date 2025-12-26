@@ -1,4 +1,7 @@
+import 'package:cubestrap/features/minecraft/models/launch.dart';
 import 'package:cubestrap/features/minecraft/providers/version_manifest.dart';
+import 'package:cubestrap/features/minecraft/repositories/authentication.dart';
+import 'package:cubestrap/features/xbox/repositories/xbox_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:modrinth/modrinth.dart';
@@ -31,11 +34,12 @@ class MyHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final manifest = ref.watch(minecraftManifestProvider);
-    final details = ref.watch(
-      minecraftVersionDetailsProvider(
-        "https://piston-meta.mojang.com/v1/packages/b9345ee364d36ef1c7ec26df6bf99d3e4a4393f5/26.1-snapshot-1.json",
-      ),
-    );
+    // final details = ref.watch(
+    //   minecraftVersionDetailsProvider(
+    //     "https://piston-meta.mojang.com/v1/packages/b9345ee364d36ef1c7ec26df6bf99d3e4a4393f5/26.1-snapshot-1.json",
+    //   ),
+    // );
+    // print(details.value?.arguments?.game);
 
     return Scaffold(
       body: Center(
@@ -45,14 +49,13 @@ class MyHomePage extends ConsumerWidget {
             FilledButton(
               onPressed: () async {
                 // final xboxClient = await XboxClient.authenticate();
-                // final minecraftClient = await MinecraftAuthentication.authenticate(
-                //   accessToken: xboxClient.credentials.accessToken,
+                // print("client = ${xboxClient.credentials.accessToken}");
+
+                // print("got client = $minecraftClient");
+                // final client = ModrinthDartApi();
+                // final projects = await client.getProjectsApi().searchProjects(
+                //   query: "automation",
                 // );
-                final client = ModrinthDartApi();
-                final projects = await client.getProjectsApi().searchProjects(
-                  query: "automation",
-                );
-                print(projects);
               },
               child: Text("Authenticate"),
             ),

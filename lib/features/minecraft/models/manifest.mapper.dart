@@ -630,6 +630,8 @@ class VersionDetailsMapper extends ClassMapperBase<VersionDetails> {
     #type: _f$type,
   };
 
+  @override
+  final MappingHook hook = const VersionDetailsHook();
   static VersionDetails _instantiate(DecodingData data) {
     return VersionDetails(
       arguments: data.dec(_f$arguments),
