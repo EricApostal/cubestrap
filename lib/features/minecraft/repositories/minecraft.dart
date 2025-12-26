@@ -9,4 +9,12 @@ class MinecraftRepository {
     );
     return MinecraftVersionManifestMapper.fromMap(response.data);
   }
+
+  static Future<VersionDetails> fetchVersionDetails(
+    String versionDetailsUrl,
+  ) async {
+    final dio = Dio();
+    final response = await dio.get(versionDetailsUrl);
+    return VersionDetailsMapper.fromMap(response.data);
+  }
 }

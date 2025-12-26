@@ -8,3 +8,11 @@ part 'version_manifest.g.dart';
 Future<MinecraftVersionManifest> minecraftManifest(Ref ref) async {
   return await MinecraftRepository.fetchManifest();
 }
+
+@riverpod
+Future<VersionDetails> minecraftVersionDetails(
+  Ref ref,
+  String versionDetailsUrl,
+) async {
+  return await MinecraftRepository.fetchVersionDetails(versionDetailsUrl);
+}

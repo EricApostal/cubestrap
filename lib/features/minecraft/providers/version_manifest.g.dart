@@ -49,3 +49,83 @@ final class MinecraftManifestProvider
 }
 
 String _$minecraftManifestHash() => r'f9c277579ce5d96a46b95ad829dbfdeeaf546834';
+
+@ProviderFor(minecraftVersionDetails)
+const minecraftVersionDetailsProvider = MinecraftVersionDetailsFamily._();
+
+final class MinecraftVersionDetailsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<VersionDetails>,
+          VersionDetails,
+          FutureOr<VersionDetails>
+        >
+    with $FutureModifier<VersionDetails>, $FutureProvider<VersionDetails> {
+  const MinecraftVersionDetailsProvider._({
+    required MinecraftVersionDetailsFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'minecraftVersionDetailsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$minecraftVersionDetailsHash();
+
+  @override
+  String toString() {
+    return r'minecraftVersionDetailsProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<VersionDetails> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<VersionDetails> create(Ref ref) {
+    final argument = this.argument as String;
+    return minecraftVersionDetails(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MinecraftVersionDetailsProvider &&
+        other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$minecraftVersionDetailsHash() =>
+    r'6b08a48443994b7acd98858ee00a3f4a62856519';
+
+final class MinecraftVersionDetailsFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<VersionDetails>, String> {
+  const MinecraftVersionDetailsFamily._()
+    : super(
+        retry: null,
+        name: r'minecraftVersionDetailsProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  MinecraftVersionDetailsProvider call(String versionDetailsUrl) =>
+      MinecraftVersionDetailsProvider._(
+        argument: versionDetailsUrl,
+        from: this,
+      );
+
+  @override
+  String toString() => r'minecraftVersionDetailsProvider';
+}
