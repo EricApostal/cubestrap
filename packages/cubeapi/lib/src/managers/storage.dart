@@ -1,9 +1,3 @@
-/*
-maybe we can do persistant storage here?
-so everywhere else we would need to call it here
-maybe we can make it generic and require them to register here
-or just make it a simple function call
-*/
 import 'dart:io';
 
 import 'package:cubeapi/src/managers/manager.dart';
@@ -22,6 +16,7 @@ class StorageManager extends Manager {
 
     Hive.init(dataDirectory.path);
 
-    await Hive.openBox("cubeapi");
+    await Hive.openBox("instances");
+    await Hive.openBox("accounts");
   }
 }

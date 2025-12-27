@@ -39,7 +39,7 @@ class MyHomePage extends ConsumerStatefulWidget {
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   bool _initializedApi = false;
   Future<void> login() async {
-    await ref.read(cubeClientProvider).authentication.signInToXbox();
+    await ref.read(cubeClientProvider).authentication.signInToMinecraft();
   }
 
   @override
@@ -64,7 +64,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           children: [
             FilledButton(
               onPressed: () async {
+                final client = ref.read(cubeClientProvider);
                 await login();
+
                 // final dio = Dio(
                 //   BaseOptions(baseUrl: "https://api.adoptium.net"),
                 // );

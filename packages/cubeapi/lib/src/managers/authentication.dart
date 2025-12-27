@@ -8,13 +8,15 @@ import 'package:cubeapi/src/models/minecraft/client.dart';
 import 'package:cubeapi/src/models/xbox/xbox.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:oauth2/oauth2.dart' as oauth2;
+import 'package:hive_ce/hive_ce.dart';
+import 'package:oauth2/oauth2.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AuthenticationManager extends Manager {
-  const AuthenticationManager({required super.client});
+  final box = Hive.box("accounts");
+  AuthenticationManager({required super.client});
 
-  Future<String> signInToXbox() async {
+  Future<Credentials> signInToXbox() async {
     // only for testing, will remove as soon as
     // microsoft approves mine
     final clientId = dotenv.env['XBOX_CLIENT_ID']!;
@@ -24,10 +26,10 @@ class AuthenticationManager extends Manager {
     final accessTokenUrl = Uri.parse(
       "https://login.microsoftonline.com/consumers/oauth2/v2.0/token",
     );
-    final scopes = ["XboxLive.SignIn", "XboxLive.offline_access"];
+    final scopes = ["XboxLive.SignIn", "offline_access"];
     final redirectUrl = Uri.parse("http://localhost:8080");
 
-    final grant = oauth2.AuthorizationCodeGrant(
+    final grant = AuthorizationCodeGrant(
       clientId,
       authorizationEndpoint,
       accessTokenUrl,
@@ -51,13 +53,31 @@ class AuthenticationManager extends Manager {
     await request.response.close();
     await server.close();
 
-    return (await grant.handleAuthorizationResponse(
+    final credentials = (await grant.handleAuthorizationResponse(
       params,
-    )).credentials.accessToken;
+    )).credentials;
+
+    credentials.toJson();
+
+    return credentials;
   }
 
-  Future<CubeClient> signInToMinecraft({String? token}) async {
-    final String accessToken = token ?? await signInToXbox();
+  Future<CubeClient> signInToMinecraft({Credentials? credentials}) async {
+    Credentials usedCredentials;
+    if (credentials == null) {
+      usedCredentials = await signInToXbox();
+    } else {
+      if (credentials.isExpired) {
+        print("CREDENTIALS EXPIRED SO REFRESHING!");
+
+        usedCredentials = await credentials.refresh();
+      } else {
+        usedCredentials = credentials;
+      }
+    }
+    // print("got credentials = $usedCredentials");
+    final accessToken = usedCredentials.accessToken;
+
     final dio = Dio(
       BaseOptions(
         headers: {
@@ -80,6 +100,7 @@ class AuthenticationManager extends Manager {
       "https://user.auth.xboxlive.com/user/authenticate",
       data: body,
     );
+
     final authentication = XboxLiveAuthenticationResponseMapper.fromMap(
       response.data,
     );
@@ -122,11 +143,18 @@ class AuthenticationManager extends Manager {
       "https://api.minecraftservices.com/minecraft/profile",
     );
     final profile = MinecraftProfileMapper.fromMap(rawProfile.data);
-    client.minecraftClient = MinecraftClient(
+    final mcClient = MinecraftClient(
       profile: profile,
       authenticationData: mcToken,
+      oauthCredentials: usedCredentials,
     );
+    client.minecraftClient = mcClient;
+    await box.put(profile.id, mcClient.toJson());
 
     return client;
+  }
+
+  List<MinecraftClient> getLoggedInAccounts() {
+    return box.values.map((e) => MinecraftClientMapper.fromJson(e)).toList();
   }
 }
