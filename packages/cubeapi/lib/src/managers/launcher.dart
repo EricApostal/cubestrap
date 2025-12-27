@@ -21,7 +21,7 @@ class LauncherManager extends Manager {
   }
 
   String _getClassPathStrings(List<Library> libraries) {
-    final basePath = client.launcherOptions.basePath.toString();
+    final basePath = "${client.launcherOptions.basePath}/libraries";
     String paths = libraries
         .map((e) => "$basePath/${e.downloads.artifact.path}")
         .join(":");

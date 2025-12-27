@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cubeapi/launcher/args.dart';
 import 'package:cubeapi/src/managers/manager.dart';
 import 'package:cubeapi/src/models/instance/instance.dart';
@@ -17,6 +19,12 @@ class InstanceManager extends Manager {
     return box.values.map((e) => MinecraftInstanceMapper.fromJson(e)).toList();
   }
 
+  Future<void> ensureDirectoryExists(String instanceId) async {
+    final instancePath =
+        "${client.launcherOptions.basePath}/instances/$instanceId/minecraft";
+    await Directory(instancePath).create(recursive: true);
+  }
+
   Future<MinecraftInstance> create({
     required String name,
     required VersionDetails rawVersionDetails,
@@ -28,6 +36,7 @@ class InstanceManager extends Manager {
       rawVersionDetails: rawVersionDetails,
     );
     await box.put(id, instance.toJson());
+    await ensureDirectoryExists(id);
 
     return instance;
   }
@@ -37,6 +46,8 @@ class InstanceManager extends Manager {
     if (rawInstance == null) {
       throw Exception("Instance not found");
     }
+    ensureDirectoryExists(id);
+
     return MinecraftInstanceMapper.fromJson(rawInstance);
   }
 
@@ -47,12 +58,17 @@ class InstanceManager extends Manager {
   // yeah no this should be in the launcher
   Future<void> launch(String id) async {
     final instance = fetch(id);
-    final details = await parseVersionDetails(
+    await ensureDirectoryExists(id);
+    print("start download libraries");
+    await client.libraries.downloadLibraries(
+      instance.rawVersionDetails.libraries,
+    );
+    print("end download libraries");
+    final details = parseVersionDetails(
       instance.rawVersionDetails,
       client: client,
+      instanceId: id,
     );
     final args = client.launcher.getLaunchArguments(details);
-
-    print("got args = $args");
   }
 }

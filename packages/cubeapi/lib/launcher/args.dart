@@ -2,15 +2,16 @@ import 'dart:io';
 
 import 'package:cubeapi/cubeapi.dart';
 
-Future<VersionDetails> parseVersionDetails(
+VersionDetails parseVersionDetails(
   VersionDetails rawDetails, {
   required CubeClient client,
-}) async {
-  final gameDir = "${client.launcherOptions.basePath}/game";
-  await Directory(gameDir).create(recursive: true);
+  required String instanceId,
+}) {
+  final basePath = client.launcherOptions.basePath;
+  final instanceDirectory = "$basePath/instances/$instanceId/minecraft";
 
-  final assetsDir = "$gameDir/assets";
-  final nativesDir = "$gameDir/versions/${rawDetails.id}/natives";
+  final assetsDir = "$instanceDirectory/assets";
+  final nativesDir = "$instanceDirectory/versions/${rawDetails.id}/natives";
 
   final libraries = rawDetails.libraries;
   final classpathList = <String>[];
@@ -18,12 +19,14 @@ Future<VersionDetails> parseVersionDetails(
   for (final lib in libraries) {
     if (_isLibraryAllowed(lib)) {
       final path = lib.downloads.artifact.path;
-      classpathList.add("$gameDir/libraries/$path");
+      classpathList.add("$basePath/libraries/$path");
     }
   }
 
   // hmmm
-  classpathList.add("$gameDir/versions/${rawDetails.id}/${rawDetails.id}.jar");
+  classpathList.add(
+    "$instanceDirectory/versions/${rawDetails.id}/${rawDetails.id}.jar",
+  );
   final classpath = classpathList.join(";");
   // print("classpath = $classpath");
 
@@ -39,7 +42,7 @@ Future<VersionDetails> parseVersionDetails(
   final parsedData = stringData
       .replaceAll(r"${auth_player_name}", minecraftClient.profile.name)
       .replaceAll(r"${version_name}", rawDetails.id)
-      .replaceAll(r"${game_directory}", gameDir)
+      .replaceAll(r"${game_directory}", instanceDirectory)
       .replaceAll(r"${assets_root}", assetsDir)
       .replaceAll(r"${assets_index_name}", rawDetails.assets)
       .replaceAll(r"${auth_uuid}", minecraftClient.profile.id)
