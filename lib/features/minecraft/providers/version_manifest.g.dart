@@ -48,7 +48,7 @@ final class MinecraftManifestProvider
   }
 }
 
-String _$minecraftManifestHash() => r'cc284720a15ec0430d6e3c49a183101fdbb799a6';
+String _$minecraftManifestHash() => r'e6d4cc7332e0fa832e03d827d3e5aceb684efde2';
 
 @ProviderFor(minecraftVersionDetails)
 const minecraftVersionDetailsProvider = MinecraftVersionDetailsFamily._();
@@ -107,7 +107,7 @@ final class MinecraftVersionDetailsProvider
 }
 
 String _$minecraftVersionDetailsHash() =>
-    r'c2265c049c468301273d821fb640099b567242bb';
+    r'd50f41dc5e0a7cae3ee79a8f35c079185637cab9';
 
 final class MinecraftVersionDetailsFamily extends $Family
     with

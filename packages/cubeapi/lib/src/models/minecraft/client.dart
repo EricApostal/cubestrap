@@ -1,4 +1,4 @@
-import 'package:cubestrap/features/minecraft/models/minecraft.dart';
+import 'package:cubeapi/src/models/minecraft/authentication.dart';
 
 class MinecraftClient {
   final MinecraftProfile profile;

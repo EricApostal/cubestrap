@@ -192,6 +192,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.7"
+  cubeapi:
+    dependency: "direct main"
+    description:
+      path: "packages/cubeapi"
+      relative: true
+    source: path
+    version: "0.0.1"
   cupertino_icons:
     dependency: "direct main"
     description:

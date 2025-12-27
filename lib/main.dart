@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:adoptium/adoptium.dart';
-import 'package:cubestrap/features/launcher/services/launcher.dart';
+import 'package:cubestrap/features/launcher/controllers/client.dart';
 import 'package:cubestrap/features/minecraft/providers/version_manifest.dart';
 import 'package:cubestrap/features/minecraft/repositories/minecraft.dart';
 import 'package:dio/dio.dart';
@@ -57,6 +57,10 @@ class MyHomePage extends ConsumerStatefulWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
+  Future<void> login() async {
+    await ref.read(cubeClientProvider).authentication.signInToXbox();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,17 +70,18 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           children: [
             FilledButton(
               onPressed: () async {
-                final dio = Dio(
-                  BaseOptions(baseUrl: "https://api.adoptium.net"),
-                );
+                await login();
+                // final dio = Dio(
+                //   BaseOptions(baseUrl: "https://api.adoptium.net"),
+                // );
 
-                final adoptium = AdoptiumClient(dio);
+                // final adoptium = AdoptiumClient(dio);
 
-                final response = await adoptium.assets.getLatestAssets(
-                  featureVersion: 25,
-                  jvmImpl: .hotspot,
-                  imageType: .jdk,
-                );
+                // final response = await adoptium.assets.getLatestAssets(
+                //   featureVersion: 25,
+                //   jvmImpl: .hotspot,
+                //   imageType: .jdk,
+                // );
 
                 // final xboxClient = await XboxClient.authenticate();
                 // final auth = Hive.box('auth');
@@ -85,18 +90,14 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 //   xboxClient.credentials.accessToken,
                 // );
 
-                final manifest = await ref.read(
-                  minecraftManifestProvider.future,
-                );
-                final details = await ref.read(
-                  minecraftVersionDetailsProvider(
-                    manifest.versions.first,
-                  ).future,
-                );
-
-                await LauncherService.downloadLibraries(details.libraries);
-
-                _genLaunchArgs();
+                // final manifest = await ref.read(
+                //   minecraftManifestProvider.future,
+                // );
+                // final details = await ref.read(
+                //   minecraftVersionDetailsProvider(
+                //     manifest.versions.first,
+                //   ).future,
+                // );
               },
               child: Text("Authenticate"),
             ),
@@ -104,17 +105,5 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         ),
       ),
     );
-  }
-
-  void _genLaunchArgs() async {
-    final manifest = await ref.read(minecraftManifestProvider.future);
-    final details = await ref.read(
-      minecraftVersionDetailsProvider(manifest.versions.first).future,
-    );
-    final args = LauncherService.generateLaunchArguments(details);
-    // final shell = Shell();
-    // await shell.run(java);
-
-    print("/usr/lib/jvm/jre-25-openjdk/bin/java $args");
   }
 }

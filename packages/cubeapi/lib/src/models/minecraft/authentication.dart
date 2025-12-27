@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-part 'minecraft.mapper.dart';
+part 'authentication.mapper.dart';
 
 @MappableClass(caseStyle: CaseStyle.snakeCase)
 class MinecraftAuthenticationData with MinecraftAuthenticationDataMappable {
