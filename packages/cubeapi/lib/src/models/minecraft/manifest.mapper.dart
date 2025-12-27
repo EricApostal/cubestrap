@@ -595,6 +595,7 @@ class VersionDetailsMapper extends ClassMapperBase<VersionDetails> {
       JavaVersionMapper.ensureInitialized();
       LibraryMapper.ensureInitialized();
       LoggingMapper.ensureInitialized();
+      VersionTypeMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -664,8 +665,11 @@ class VersionDetailsMapper extends ClassMapperBase<VersionDetails> {
   );
   static DateTime _$time(VersionDetails v) => v.time;
   static const Field<VersionDetails, DateTime> _f$time = Field('time', _$time);
-  static String _$type(VersionDetails v) => v.type;
-  static const Field<VersionDetails, String> _f$type = Field('type', _$type);
+  static VersionType _$type(VersionDetails v) => v.type;
+  static const Field<VersionDetails, VersionType> _f$type = Field(
+    'type',
+    _$type,
+  );
 
   @override
   final MappableFields<VersionDetails> fields = const {
@@ -685,8 +689,6 @@ class VersionDetailsMapper extends ClassMapperBase<VersionDetails> {
     #type: _f$type,
   };
 
-  @override
-  final MappingHook hook = const VersionDetailsHook();
   static VersionDetails _instantiate(DecodingData data) {
     return VersionDetails(
       arguments: data.dec(_f$arguments),
@@ -791,7 +793,7 @@ abstract class VersionDetailsCopyWith<$R, $In extends VersionDetails, $Out>
     int? minimumLauncherVersion,
     DateTime? releaseTime,
     DateTime? time,
-    String? type,
+    VersionType? type,
   });
   VersionDetailsCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
     Then<$Out2, $R2> t,
@@ -843,7 +845,7 @@ class _VersionDetailsCopyWithImpl<$R, $Out>
     int? minimumLauncherVersion,
     DateTime? releaseTime,
     DateTime? time,
-    String? type,
+    VersionType? type,
   }) => $apply(
     FieldCopyWithData({
       if (arguments != $none) #arguments: arguments,

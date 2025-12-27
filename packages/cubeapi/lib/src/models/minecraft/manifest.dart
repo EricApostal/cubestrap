@@ -42,7 +42,7 @@ class VersionManfiestEntry with VersionManfiestEntryMappable {
   });
 }
 
-@MappableClass(hook: VersionDetailsHook())
+@MappableClass()
 class VersionDetails with VersionDetailsMappable {
   final VersionArguments? arguments;
   final AssetIndex assetIndex;
@@ -57,7 +57,7 @@ class VersionDetails with VersionDetailsMappable {
   final int minimumLauncherVersion;
   final DateTime releaseTime;
   final DateTime time;
-  final String type;
+  final VersionType type;
 
   const VersionDetails({
     this.arguments,
@@ -75,16 +75,6 @@ class VersionDetails with VersionDetailsMappable {
     required this.time,
     required this.type,
   });
-}
-
-class VersionDetailsHook extends MappingHook {
-  const VersionDetailsHook();
-  @override
-  Object? beforeDecode(Object? value) {
-    // print("version details");
-    // print(value);
-    return value;
-  }
 }
 
 @MappableClass()
@@ -133,22 +123,25 @@ class ArgumentHook extends MappingHook {
   }
 
   @override
-  Object? afterDecode(Object? value) {
-    // assert(value is List<Argument>);
-    // final List<Argument> filtered = [];
-    // for (final argument in value as List<Argument>) {
-    //   if (argument.rules.isEmpty) {
-    //     filtered.add(argument);
-    //     continue;
-    //   }
+  Object? afterEncode(Object? value) {
+    if (value is List) {
+      return value.map((e) {
+        if (e is Map) {
+          final rules = e['rules'] as List?;
+          final values = e['values'] as List;
 
-    //   for (final rule in argument.rules) {
-    //     if (rule.)
-    //   }
-    // }
+          if ((rules == null || rules.isEmpty) && values.length == 1) {
+            return values.first;
+          }
 
-    // todo: actually handle platform specific args
-
+          return {
+            'rules': rules,
+            'value': values.length == 1 ? values.first : values,
+          };
+        }
+        return e;
+      }).toList();
+    }
     return value;
   }
 }

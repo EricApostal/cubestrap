@@ -1,3 +1,4 @@
+import 'package:cubeapi/cubeapi.dart';
 import 'package:cubestrap/features/launcher/controllers/client.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,11 +69,19 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           children: [
             FilledButton(
               onPressed: () async {
-                // 96747c1c505a420f843e96109b42c0fa
-
-                // final client = ref.read(cubeClientProvider);
-
                 await login();
+                final client = ref.read(cubeClientProvider);
+                final entry =
+                    (await client.minecraft.getManifest()).versions.first;
+                final details = (await client.minecraft.getVersionDetails(
+                  entry,
+                ));
+                final instance = await client.instances.create(
+                  name: "Anutha Instance",
+                  rawVersionDetails: details,
+                );
+                client.instances.launch(instance.id);
+                // 43d934f9-68f9-43bf-9d1a-270af5f43baf
 
                 // final dio = Dio(
                 //   BaseOptions(baseUrl: "https://api.adoptium.net"),
