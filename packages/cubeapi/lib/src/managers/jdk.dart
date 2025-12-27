@@ -39,7 +39,20 @@ class JdkManager extends Manager {
     final bytes = await file.readAsBytes();
     print("running unarchive - ${bytes.length} bytes");
 
-    final archive = TarDecoder().decodeBytes(GZipDecoder().decodeBytes(bytes));
+    final fileName = file.path;
+    late final Archive archive;
+
+    if (fileName.endsWith('.tar.gz') || fileName.endsWith('.tgz')) {
+      // .tar.gz files need to be decompressed with GZip first, then extracted with Tar
+      archive = TarDecoder().decodeBytes(GZipDecoder().decodeBytes(bytes));
+    } else if (fileName.endsWith('.zip')) {
+      archive = ZipDecoder().decodeBytes(bytes);
+    } else if (fileName.endsWith('.tar')) {
+      archive = TarDecoder().decodeBytes(bytes);
+    } else {
+      throw UnsupportedError('Unsupported archive format: $fileName');
+    }
+
     print("${archive.files.length} files in archive");
 
     final List<Future> futures = [];
