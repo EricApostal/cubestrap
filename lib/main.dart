@@ -67,35 +67,17 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             FilledButton(
               onPressed: () async {
                 final dio = Dio(
-                  BaseOptions(
-                    baseUrl: "https://api.adoptium.net",
-                    validateStatus: (status) => true,
-                  ),
+                  BaseOptions(baseUrl: "https://api.adoptium.net"),
                 );
 
                 final adoptium = AdoptiumClient(dio);
 
-                final response = await adoptium.binary.getBinary(
-                  arch: Architecture.x64,
+                final response = await adoptium.assets.getLatestAssets(
                   featureVersion: 25,
-                  heapSize: HeapSize.normal,
-                  imageType: .jdk,
                   jvmImpl: .hotspot,
-                  os: .linux,
-                  releaseType: .ea,
-                  vendor: .eclipse,
+                  imageType: .jdk,
                 );
-                final name = response.response.headers["location"]!.first
-                    .split("/")
-                    .last;
-
-                print(response.response.statusCode);
-                print(response.response.redirects);
-
-                await dio.downloadUri(
-                  response.response.realUri,
-                  "${Directory.current.path}/$name",
-                );
+                print(response.data.first.binary?.package?.link);
 
                 // final xboxClient = await XboxClient.authenticate();
                 // final auth = Hive.box('auth');
