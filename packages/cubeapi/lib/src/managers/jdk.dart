@@ -26,10 +26,40 @@ class JdkManager extends Manager {
 
     final fullPath = "$path/$jdkName";
 
-    final folderPath = "$path/$jdkVersionName";
-
     await dio.download(jdkDownload, fullPath);
-    extractFileToDisk(fullPath, folderPath);
+    print("at path = $fullPath");
+
+    final file = File(fullPath);
+    await _unarchive(file);
+  }
+
+  Future<void> _unarchive(File file) async {
+    final basePath = "${client.launcherOptions.basePath}/java";
+
+    final bytes = await file.readAsBytes();
+    print("running unarchive - ${bytes.length} bytes");
+
+    final archive = TarDecoder().decodeBytes(GZipDecoder().decodeBytes(bytes));
+    print("${archive.files.length} files in archive");
+
+    final List<Future> futures = [];
+    for (final entry in archive.files) {
+      if (entry.isFile) {
+        futures.add(() async {
+          final fullPath = "$basePath/${entry.name}";
+          // print(fullPath);
+          final fileBytes = entry.readBytes();
+          if (fileBytes != null) {
+            final extractedFile = File(fullPath);
+            await extractedFile.create(recursive: true);
+            await extractedFile.writeAsBytes(fileBytes);
+          }
+        }());
+      }
+    }
+
+    await Future.wait(futures);
+    await file.delete();
   }
 
   Future<List<BinaryAssetView>> listAssets(int featureVersion) async {
