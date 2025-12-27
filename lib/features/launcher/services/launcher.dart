@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:cubestrap/features/minecraft/models/manifest.dart';
 import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
 
 class LauncherService {
   static Future<void> downloadLibraries(List<Library> libraries) async {
@@ -42,7 +43,6 @@ class LauncherService {
         '-cp "${_getClassPathStrings(details.libraries)}" net.minecraft.client.main.Main ';
 
     // extract game args and set
-
     for (final arg in details.arguments!.game) {
       args += arg.values.join(" ");
       args += " ";
