@@ -39,7 +39,11 @@ class MyHomePage extends ConsumerStatefulWidget {
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   bool _initializedApi = false;
   Future<void> login() async {
-    await ref.read(cubeClientProvider).authentication.signInToMinecraft();
+    final profileId = "96747c1c505a420f843e96109b42c0fa";
+    await ref
+        .read(cubeClientProvider)
+        .authentication
+        .signInToMinecraft(profileId: profileId);
   }
 
   @override
@@ -64,7 +68,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           children: [
             FilledButton(
               onPressed: () async {
-                final client = ref.read(cubeClientProvider);
+                // 96747c1c505a420f843e96109b42c0fa
+
+                // final client = ref.read(cubeClientProvider);
+
                 await login();
 
                 // final dio = Dio(

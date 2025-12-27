@@ -62,21 +62,23 @@ class AuthenticationManager extends Manager {
     return credentials;
   }
 
-  Future<CubeClient> signInToMinecraft({Credentials? credentials}) async {
-    Credentials usedCredentials;
-    if (credentials == null) {
-      usedCredentials = await signInToXbox();
+  Future<CubeClient> signInToMinecraft({String? profileId}) async {
+    final coldProfile = profileId != null ? getAccount(profileId) : null;
+
+    Credentials credentials;
+    if (coldProfile == null) {
+      credentials = await signInToXbox();
     } else {
-      if (credentials.isExpired) {
+      if (coldProfile.oauthCredentials.isExpired) {
         print("CREDENTIALS EXPIRED SO REFRESHING!");
 
-        usedCredentials = await credentials.refresh();
+        credentials = await coldProfile.oauthCredentials.refresh();
       } else {
-        usedCredentials = credentials;
+        credentials = coldProfile.oauthCredentials;
       }
     }
     // print("got credentials = $usedCredentials");
-    final accessToken = usedCredentials.accessToken;
+    final accessToken = credentials.accessToken;
 
     final dio = Dio(
       BaseOptions(
@@ -146,7 +148,7 @@ class AuthenticationManager extends Manager {
     final mcClient = MinecraftClient(
       profile: profile,
       authenticationData: mcToken,
-      oauthCredentials: usedCredentials,
+      oauthCredentials: credentials,
     );
     client.minecraftClient = mcClient;
     await box.put(profile.id, mcClient.toJson());
@@ -156,5 +158,13 @@ class AuthenticationManager extends Manager {
 
   List<MinecraftClient> getLoggedInAccounts() {
     return box.values.map((e) => MinecraftClientMapper.fromJson(e)).toList();
+  }
+
+  MinecraftClient? getAccount(String id) {
+    final rawData = box.get(id);
+    if (rawData == null) {
+      return null;
+    }
+    return MinecraftClientMapper.fromJson(rawData);
   }
 }
