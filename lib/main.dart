@@ -1,28 +1,14 @@
-import 'dart:io';
-
 import 'package:cubestrap/features/launcher/controllers/client.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_ce/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
-  await _initHive();
+  baseDocumentDirectory = await getApplicationDocumentsDirectory();
 
   runApp(const Cubestrap());
-}
-
-Future<void> _initHive() async {
-  final appDocumentDir = await getApplicationDocumentsDirectory();
-  // will find a better way to do this but it's good for now
-  final dataDir = Directory('${appDocumentDir.path}/cubestrap/data');
-  if (!dataDir.existsSync()) {
-    dataDir.createSync(recursive: true);
-  }
-  Hive.init(dataDir.path);
-  await Hive.openBox("auth");
 }
 
 class Cubestrap extends StatelessWidget {
@@ -51,12 +37,26 @@ class MyHomePage extends ConsumerStatefulWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
+  bool _initializedApi = false;
   Future<void> login() async {
     await ref.read(cubeClientProvider).authentication.signInToXbox();
   }
 
   @override
+  void initState() {
+    super.initState();
+    ref.read(cubeClientProvider).initialize().then((_) {
+      setState(() {
+        _initializedApi = true;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (!_initializedApi) {
+      return Center(child: CircularProgressIndicator.adaptive());
+    }
     return Scaffold(
       body: Center(
         child: Column(

@@ -22,6 +22,7 @@ dependencies:
   adoptium:
     path:
       ../adoptium
+  hive_ce: ^2.16.0
 
 dev_dependencies:
   flutter_test:

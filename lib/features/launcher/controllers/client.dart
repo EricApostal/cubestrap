@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:cubeapi/cubeapi.dart' as api;
-import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'client.g.dart';
+
+// this is pretty bad but this is always set at app init
+Directory? baseDocumentDirectory;
 
 @Riverpod(keepAlive: true)
 class CubeClient extends _$CubeClient {
@@ -10,10 +14,10 @@ class CubeClient extends _$CubeClient {
   @override
   api.CubeClient build() {
     if (client == null) {
-      final basePath = "${getApplicationDocumentsDirectory()}/cubestrap";
+      final basePath = "${baseDocumentDirectory!.path}/cubestrap";
 
       client = api.CubeClient(
-        launcherOptions: api.LauncherOptions(basePath: Uri.parse(basePath)),
+        launcherOptions: api.LauncherOptions(basePath: basePath),
       );
     }
 
