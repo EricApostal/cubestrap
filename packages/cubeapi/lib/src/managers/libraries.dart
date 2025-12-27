@@ -11,12 +11,12 @@ class LibraryManager extends Manager {
   Future<void> downloadLibraries(List<Library> libraries) async {
     final List<Future> futures = [];
     for (final lib in libraries) {
-      Future<void> download() async {
-        final artifact = lib.downloads.artifact;
-        dio.download(artifact.url, "$librariesPath/${artifact.path}");
-      }
+      final future = dio.download(
+        lib.downloads.artifact.url,
+        "$librariesPath/${lib.downloads.artifact.path}",
+      );
 
-      futures.add(download());
+      futures.add(future);
     }
     await Future.wait(futures);
   }
