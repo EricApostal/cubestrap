@@ -1,8 +1,32 @@
+import 'package:cubeapi/launcher/args.dart';
 import 'package:cubeapi/src/managers/manager.dart';
 import 'package:cubeapi/src/models/minecraft/manifest.dart';
 
 class LauncherManager extends Manager {
   const LauncherManager({required super.client});
+
+  Future<void> launchInstance(String instanceId) async {
+    final instance = client.instances.fetch(instanceId);
+    await client.instances.ensureDirectoryExists(instanceId);
+
+    // I'll need some sort of task manager for this for the UI
+    await client.libraries.downloadLibraries(
+      instance.rawVersionDetails.libraries,
+    );
+
+    print("Ensuring feature version");
+    await client.jdk.ensureFeatureVersion(
+      instance.rawVersionDetails.javaVersion.majorVersion,
+    );
+    print("ensured!");
+
+    final details = parseVersionDetails(
+      instance.rawVersionDetails,
+      client: client,
+      instanceId: instanceId,
+    );
+    final args = client.launcher.getLaunchArguments(details);
+  }
 
   String getLaunchArguments(VersionDetails details) {
     String args = "";

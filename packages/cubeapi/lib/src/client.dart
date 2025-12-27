@@ -1,5 +1,6 @@
 import 'package:cubeapi/src/managers/authentication.dart';
 import 'package:cubeapi/src/managers/instances.dart';
+import 'package:cubeapi/src/managers/jdk.dart';
 import 'package:cubeapi/src/managers/launcher.dart';
 import 'package:cubeapi/src/managers/libraries.dart';
 import 'package:cubeapi/src/managers/minecraft.dart';
@@ -19,6 +20,7 @@ class CubeClient {
   LibraryManager get libraries => LibraryManager(client: this);
   StorageManager get storage => StorageManager(client: this);
   InstanceManager get instances => InstanceManager(client: this);
+  JdkManager get jdk => JdkManager(client: this);
 
   Future<void> initialize() async {
     await storage.initialize();

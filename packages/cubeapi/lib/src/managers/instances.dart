@@ -54,21 +54,4 @@ class InstanceManager extends Manager {
   Future<void> delete(String id) async {
     box.delete(id);
   }
-
-  // yeah no this should be in the launcher
-  Future<void> launch(String id) async {
-    final instance = fetch(id);
-    await ensureDirectoryExists(id);
-    print("start download libraries");
-    await client.libraries.downloadLibraries(
-      instance.rawVersionDetails.libraries,
-    );
-    print("end download libraries");
-    final details = parseVersionDetails(
-      instance.rawVersionDetails,
-      client: client,
-      instanceId: id,
-    );
-    final args = client.launcher.getLaunchArguments(details);
-  }
 }
