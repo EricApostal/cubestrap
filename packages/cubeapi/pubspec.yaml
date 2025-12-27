@@ -2,6 +2,7 @@ name: cubeapi
 description: "A new Flutter package project."
 version: 0.0.1
 homepage:
+publish_to: none
 
 environment:
   sdk: ^3.10.4
@@ -15,7 +16,12 @@ dependencies:
   oauth2: ^2.0.5
   flutter_dotenv: ^6.0.0
   url_launcher: ^6.3.2
-  
+  modrinth:
+    path:
+      ../modrinth
+  adoptium:
+    path:
+      ../adoptium
 
 dev_dependencies:
   flutter_test:

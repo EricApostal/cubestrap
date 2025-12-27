@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cubeapi/cubeapi.dart';
 import 'package:cubeapi/src/client.dart';
 import 'package:cubeapi/src/managers/manager.dart';
+import 'package:cubeapi/src/models/minecraft/authentication.dart';
+import 'package:cubeapi/src/models/minecraft/client.dart';
+import 'package:cubeapi/src/models/xbox/xbox.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
@@ -111,19 +113,10 @@ class AuthenticationManager extends Manager {
     );
     final mcToken = MinecraftAuthenticationDataMapper.fromMap(mcIdentity.data);
 
-    // aight it's close, now all I need is the profile info and such
-
     // check game ownership
     final mcDio = Dio(
       BaseOptions(headers: {"Authorization": "Bearer ${mcToken.accessToken}"}),
     );
-
-    // final ownedItemsRaw = await mcDio.get(
-    //   "https://api.minecraftservices.com/entitlements/mcstore",
-    // );
-    // final entitlements = MinecraftEntitlementResponseMapper.fromMap(
-    //   ownedItemsRaw.data,
-    // );
 
     final rawProfile = await mcDio.get(
       "https://api.minecraftservices.com/minecraft/profile",

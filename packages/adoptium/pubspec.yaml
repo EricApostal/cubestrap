@@ -2,6 +2,7 @@ name: adoptium
 description: "OpenAPI generated client for Adoptium"
 version: 0.0.1
 homepage:
+publish_to: none
 
 environment:
   sdk: ^3.10.4

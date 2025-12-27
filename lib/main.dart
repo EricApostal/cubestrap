@@ -1,17 +1,11 @@
 import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:adoptium/adoptium.dart';
 import 'package:cubestrap/features/launcher/controllers/client.dart';
-import 'package:cubestrap/features/minecraft/providers/version_manifest.dart';
-import 'package:cubestrap/features/minecraft/repositories/minecraft.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:process_run/shell.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");

@@ -2,10 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cubeapi/src/managers/manager.dart';
-import 'package:cubeapi/src/models/minecraft/authentication.dart';
-import 'package:cubeapi/src/models/minecraft/client.dart';
 import 'package:cubeapi/src/models/minecraft/manifest.dart';
-import 'package:cubeapi/src/models/xbox/xbox.dart';
 import 'package:dio/dio.dart';
 
 // TODO: Too much logic here. We should probably have a service layer
