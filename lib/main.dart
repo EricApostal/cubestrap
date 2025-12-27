@@ -1,4 +1,3 @@
-import 'package:cubeapi/cubeapi.dart';
 import 'package:cubestrap/features/launcher/controllers/client.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cubeapi/launcher/args.dart';
 import 'package:cubeapi/src/managers/manager.dart';
 import 'package:cubeapi/src/models/instance/instance.dart';
 import 'package:cubeapi/src/models/minecraft/manifest.dart';

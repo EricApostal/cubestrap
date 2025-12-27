@@ -14,11 +14,10 @@ class LauncherManager extends Manager {
       instance.rawVersionDetails.libraries,
     );
 
-    print("Ensuring feature version");
+    // this is a bit weird because you can run a lot on different versions so idk
     await client.jdk.ensureFeatureVersion(
       instance.rawVersionDetails.javaVersion.majorVersion,
     );
-    print("ensured!");
 
     final details = parseVersionDetails(
       instance.rawVersionDetails,

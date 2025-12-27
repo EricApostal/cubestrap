@@ -22,12 +22,12 @@ class JdkManager extends Manager {
     final asset = assets.first;
     final jdkDownload = asset.binary!.package!.link;
     final jdkName = asset.binary!.package!.name;
-    final jdkVersionName = asset.version!.openjdkVersion;
 
     final fullPath = "$path/$jdkName";
 
+    // todo: handle existing versions and such
+    // I'll need a way of traversing files and reading the "release"
     await dio.download(jdkDownload, fullPath);
-    print("at path = $fullPath");
 
     final file = File(fullPath);
     await _unarchive(file);
@@ -36,8 +36,8 @@ class JdkManager extends Manager {
   Future<void> _unarchive(File file) async {
     final basePath = "${client.launcherOptions.basePath}/java";
 
+    // todo: let's just do 7zip bindings
     final bytes = await file.readAsBytes();
-    print("running unarchive - ${bytes.length} bytes");
 
     final fileName = file.path;
     late final Archive archive;
@@ -53,14 +53,11 @@ class JdkManager extends Manager {
       throw UnsupportedError('Unsupported archive format: $fileName');
     }
 
-    print("${archive.files.length} files in archive");
-
     final List<Future> futures = [];
     for (final entry in archive.files) {
       if (entry.isFile) {
         futures.add(() async {
           final fullPath = "$basePath/${entry.name}";
-          // print(fullPath);
           final fileBytes = entry.readBytes();
           if (fileBytes != null) {
             final extractedFile = File(fullPath);
