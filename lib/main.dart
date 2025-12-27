@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:adoptium/adoptium.dart';
 import 'package:cubestrap/features/launcher/services/launcher.dart';
@@ -65,7 +66,15 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           children: [
             FilledButton(
               onPressed: () async {
-                final adoptium = AdoptiumClient(Dio());
+                final dio = Dio(
+                  BaseOptions(
+                    baseUrl: "https://api.adoptium.net",
+                    validateStatus: (status) => true,
+                  ),
+                );
+
+                final adoptium = AdoptiumClient(dio);
+
                 final response = await adoptium.binary.getBinary(
                   arch: Architecture.x64,
                   featureVersion: 25,
@@ -76,7 +85,17 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   releaseType: .ea,
                   vendor: .eclipse,
                 );
+                final name = response.response.headers["location"]!.first
+                    .split("/")
+                    .last;
+
                 print(response.response.statusCode);
+                print(response.response.redirects);
+
+                await dio.downloadUri(
+                  response.response.realUri,
+                  "${Directory.current.path}/$name",
+                );
 
                 // final xboxClient = await XboxClient.authenticate();
                 // final auth = Hive.box('auth');
