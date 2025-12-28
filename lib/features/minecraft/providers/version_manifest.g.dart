@@ -10,7 +10,7 @@ part of 'version_manifest.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(minecraftManifest)
-const minecraftManifestProvider = MinecraftManifestProvider._();
+final minecraftManifestProvider = MinecraftManifestProvider._();
 
 final class MinecraftManifestProvider
     extends
@@ -22,7 +22,7 @@ final class MinecraftManifestProvider
     with
         $FutureModifier<MinecraftVersionManifest>,
         $FutureProvider<MinecraftVersionManifest> {
-  const MinecraftManifestProvider._()
+  MinecraftManifestProvider._()
     : super(
         from: null,
         argument: null,
@@ -51,7 +51,7 @@ final class MinecraftManifestProvider
 String _$minecraftManifestHash() => r'e6d4cc7332e0fa832e03d827d3e5aceb684efde2';
 
 @ProviderFor(minecraftVersionDetails)
-const minecraftVersionDetailsProvider = MinecraftVersionDetailsFamily._();
+final minecraftVersionDetailsProvider = MinecraftVersionDetailsFamily._();
 
 final class MinecraftVersionDetailsProvider
     extends
@@ -61,7 +61,7 @@ final class MinecraftVersionDetailsProvider
           FutureOr<VersionDetails>
         >
     with $FutureModifier<VersionDetails>, $FutureProvider<VersionDetails> {
-  const MinecraftVersionDetailsProvider._({
+  MinecraftVersionDetailsProvider._({
     required MinecraftVersionDetailsFamily super.from,
     required VersionManfiestEntry super.argument,
   }) : super(
@@ -115,7 +115,7 @@ final class MinecraftVersionDetailsFamily extends $Family
           FutureOr<VersionDetails>,
           VersionManfiestEntry
         > {
-  const MinecraftVersionDetailsFamily._()
+  MinecraftVersionDetailsFamily._()
     : super(
         retry: null,
         name: r'minecraftVersionDetailsProvider',

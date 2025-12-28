@@ -10,11 +10,11 @@ part of 'client.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(CubeClient)
-const cubeClientProvider = CubeClientProvider._();
+final cubeClientProvider = CubeClientProvider._();
 
 final class CubeClientProvider
     extends $NotifierProvider<CubeClient, api.CubeClient> {
-  const CubeClientProvider._()
+  CubeClientProvider._()
     : super(
         from: null,
         argument: null,
@@ -41,14 +41,13 @@ final class CubeClientProvider
   }
 }
 
-String _$cubeClientHash() => r'2bf0d08010b71548f588d6446bc5649b6c751312';
+String _$cubeClientHash() => r'1759707c524e83e06894dceb7d2487c0025bd737';
 
 abstract class _$CubeClient extends $Notifier<api.CubeClient> {
   api.CubeClient build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<api.CubeClient, api.CubeClient>;
     final element =
         ref.element
@@ -58,6 +57,6 @@ abstract class _$CubeClient extends $Notifier<api.CubeClient> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
