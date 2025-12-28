@@ -1,0 +1,326 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
+// ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
+
+part of 'creatable_version.dart';
+
+class CreatableVersionMapper extends ClassMapperBase<CreatableVersion> {
+  CreatableVersionMapper._();
+
+  static CreatableVersionMapper? _instance;
+  static CreatableVersionMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = CreatableVersionMapper._());
+      VersionDependencyMapper.ensureInitialized();
+      BaseVersionVersionTypeMapper.ensureInitialized();
+      BaseVersionStatusMapper.ensureInitialized();
+      BaseVersionRequestedStatusMapper.ensureInitialized();
+    }
+    return _instance!;
+  }
+
+  @override
+  final String id = 'CreatableVersion';
+
+  static String _$projectId(CreatableVersion v) => v.projectId;
+  static const Field<CreatableVersion, String> _f$projectId = Field(
+    'projectId',
+    _$projectId,
+    key: r'project_id',
+  );
+  static List<String> _$fileParts(CreatableVersion v) => v.fileParts;
+  static const Field<CreatableVersion, List<String>> _f$fileParts = Field(
+    'fileParts',
+    _$fileParts,
+    key: r'file_parts',
+  );
+  static String? _$name(CreatableVersion v) => v.name;
+  static const Field<CreatableVersion, String> _f$name = Field(
+    'name',
+    _$name,
+    opt: true,
+  );
+  static String? _$versionNumber(CreatableVersion v) => v.versionNumber;
+  static const Field<CreatableVersion, String> _f$versionNumber = Field(
+    'versionNumber',
+    _$versionNumber,
+    key: r'version_number',
+    opt: true,
+  );
+  static String? _$changelog(CreatableVersion v) => v.changelog;
+  static const Field<CreatableVersion, String> _f$changelog = Field(
+    'changelog',
+    _$changelog,
+    opt: true,
+  );
+  static List<VersionDependency>? _$dependencies(CreatableVersion v) =>
+      v.dependencies;
+  static const Field<CreatableVersion, List<VersionDependency>>
+  _f$dependencies = Field('dependencies', _$dependencies, opt: true);
+  static List<String>? _$gameVersions(CreatableVersion v) => v.gameVersions;
+  static const Field<CreatableVersion, List<String>> _f$gameVersions = Field(
+    'gameVersions',
+    _$gameVersions,
+    key: r'game_versions',
+    opt: true,
+  );
+  static BaseVersionVersionType? _$versionType(CreatableVersion v) =>
+      v.versionType;
+  static const Field<CreatableVersion, BaseVersionVersionType> _f$versionType =
+      Field('versionType', _$versionType, key: r'version_type', opt: true);
+  static List<String>? _$loaders(CreatableVersion v) => v.loaders;
+  static const Field<CreatableVersion, List<String>> _f$loaders = Field(
+    'loaders',
+    _$loaders,
+    opt: true,
+  );
+  static bool? _$featured(CreatableVersion v) => v.featured;
+  static const Field<CreatableVersion, bool> _f$featured = Field(
+    'featured',
+    _$featured,
+    opt: true,
+  );
+  static BaseVersionStatus? _$status(CreatableVersion v) => v.status;
+  static const Field<CreatableVersion, BaseVersionStatus> _f$status = Field(
+    'status',
+    _$status,
+    opt: true,
+  );
+  static BaseVersionRequestedStatus? _$requestedStatus(CreatableVersion v) =>
+      v.requestedStatus;
+  static const Field<CreatableVersion, BaseVersionRequestedStatus>
+  _f$requestedStatus = Field(
+    'requestedStatus',
+    _$requestedStatus,
+    key: r'requested_status',
+    opt: true,
+  );
+  static String? _$primaryFile(CreatableVersion v) => v.primaryFile;
+  static const Field<CreatableVersion, String> _f$primaryFile = Field(
+    'primaryFile',
+    _$primaryFile,
+    key: r'primary_file',
+    opt: true,
+  );
+
+  @override
+  final MappableFields<CreatableVersion> fields = const {
+    #projectId: _f$projectId,
+    #fileParts: _f$fileParts,
+    #name: _f$name,
+    #versionNumber: _f$versionNumber,
+    #changelog: _f$changelog,
+    #dependencies: _f$dependencies,
+    #gameVersions: _f$gameVersions,
+    #versionType: _f$versionType,
+    #loaders: _f$loaders,
+    #featured: _f$featured,
+    #status: _f$status,
+    #requestedStatus: _f$requestedStatus,
+    #primaryFile: _f$primaryFile,
+  };
+
+  static CreatableVersion _instantiate(DecodingData data) {
+    return CreatableVersion(
+      projectId: data.dec(_f$projectId),
+      fileParts: data.dec(_f$fileParts),
+      name: data.dec(_f$name),
+      versionNumber: data.dec(_f$versionNumber),
+      changelog: data.dec(_f$changelog),
+      dependencies: data.dec(_f$dependencies),
+      gameVersions: data.dec(_f$gameVersions),
+      versionType: data.dec(_f$versionType),
+      loaders: data.dec(_f$loaders),
+      featured: data.dec(_f$featured),
+      status: data.dec(_f$status),
+      requestedStatus: data.dec(_f$requestedStatus),
+      primaryFile: data.dec(_f$primaryFile),
+    );
+  }
+
+  @override
+  final Function instantiate = _instantiate;
+
+  static CreatableVersion fromMap(Map<String, dynamic> map) {
+    return ensureInitialized().decodeMap<CreatableVersion>(map);
+  }
+
+  static CreatableVersion fromJson(String json) {
+    return ensureInitialized().decodeJson<CreatableVersion>(json);
+  }
+}
+
+mixin CreatableVersionMappable {
+  CreatableVersionCopyWith<CreatableVersion, CreatableVersion, CreatableVersion>
+  get copyWith =>
+      _CreatableVersionCopyWithImpl<CreatableVersion, CreatableVersion>(
+        this as CreatableVersion,
+        $identity,
+        $identity,
+      );
+  @override
+  String toString() {
+    return CreatableVersionMapper.ensureInitialized().stringifyValue(
+      this as CreatableVersion,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return CreatableVersionMapper.ensureInitialized().equalsValue(
+      this as CreatableVersion,
+      other,
+    );
+  }
+
+  @override
+  int get hashCode {
+    return CreatableVersionMapper.ensureInitialized().hashValue(
+      this as CreatableVersion,
+    );
+  }
+}
+
+extension CreatableVersionValueCopy<$R, $Out>
+    on ObjectCopyWith<$R, CreatableVersion, $Out> {
+  CreatableVersionCopyWith<$R, CreatableVersion, $Out>
+  get $asCreatableVersion =>
+      $base.as((v, t, t2) => _CreatableVersionCopyWithImpl<$R, $Out>(v, t, t2));
+}
+
+abstract class CreatableVersionCopyWith<$R, $In extends CreatableVersion, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get fileParts;
+  ListCopyWith<
+    $R,
+    VersionDependency,
+    VersionDependencyCopyWith<$R, VersionDependency, VersionDependency>
+  >?
+  get dependencies;
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
+  get gameVersions;
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>? get loaders;
+  $R call({
+    String? projectId,
+    List<String>? fileParts,
+    String? name,
+    String? versionNumber,
+    String? changelog,
+    List<VersionDependency>? dependencies,
+    List<String>? gameVersions,
+    BaseVersionVersionType? versionType,
+    List<String>? loaders,
+    bool? featured,
+    BaseVersionStatus? status,
+    BaseVersionRequestedStatus? requestedStatus,
+    String? primaryFile,
+  });
+  CreatableVersionCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
+    Then<$Out2, $R2> t,
+  );
+}
+
+class _CreatableVersionCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, CreatableVersion, $Out>
+    implements CreatableVersionCopyWith<$R, CreatableVersion, $Out> {
+  _CreatableVersionCopyWithImpl(super.value, super.then, super.then2);
+
+  @override
+  late final ClassMapperBase<CreatableVersion> $mapper =
+      CreatableVersionMapper.ensureInitialized();
+  @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get fileParts =>
+      ListCopyWith(
+        $value.fileParts,
+        (v, t) => ObjectCopyWith(v, $identity, t),
+        (v) => call(fileParts: v),
+      );
+  @override
+  ListCopyWith<
+    $R,
+    VersionDependency,
+    VersionDependencyCopyWith<$R, VersionDependency, VersionDependency>
+  >?
+  get dependencies => $value.dependencies != null
+      ? ListCopyWith(
+          $value.dependencies!,
+          (v, t) => v.copyWith.$chain(t),
+          (v) => call(dependencies: v),
+        )
+      : null;
+  @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
+  get gameVersions => $value.gameVersions != null
+      ? ListCopyWith(
+          $value.gameVersions!,
+          (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(gameVersions: v),
+        )
+      : null;
+  @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>? get loaders =>
+      $value.loaders != null
+      ? ListCopyWith(
+          $value.loaders!,
+          (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(loaders: v),
+        )
+      : null;
+  @override
+  $R call({
+    String? projectId,
+    List<String>? fileParts,
+    Object? name = $none,
+    Object? versionNumber = $none,
+    Object? changelog = $none,
+    Object? dependencies = $none,
+    Object? gameVersions = $none,
+    Object? versionType = $none,
+    Object? loaders = $none,
+    Object? featured = $none,
+    Object? status = $none,
+    Object? requestedStatus = $none,
+    Object? primaryFile = $none,
+  }) => $apply(
+    FieldCopyWithData({
+      if (projectId != null) #projectId: projectId,
+      if (fileParts != null) #fileParts: fileParts,
+      if (name != $none) #name: name,
+      if (versionNumber != $none) #versionNumber: versionNumber,
+      if (changelog != $none) #changelog: changelog,
+      if (dependencies != $none) #dependencies: dependencies,
+      if (gameVersions != $none) #gameVersions: gameVersions,
+      if (versionType != $none) #versionType: versionType,
+      if (loaders != $none) #loaders: loaders,
+      if (featured != $none) #featured: featured,
+      if (status != $none) #status: status,
+      if (requestedStatus != $none) #requestedStatus: requestedStatus,
+      if (primaryFile != $none) #primaryFile: primaryFile,
+    }),
+  );
+  @override
+  CreatableVersion $make(CopyWithData data) => CreatableVersion(
+    projectId: data.get(#projectId, or: $value.projectId),
+    fileParts: data.get(#fileParts, or: $value.fileParts),
+    name: data.get(#name, or: $value.name),
+    versionNumber: data.get(#versionNumber, or: $value.versionNumber),
+    changelog: data.get(#changelog, or: $value.changelog),
+    dependencies: data.get(#dependencies, or: $value.dependencies),
+    gameVersions: data.get(#gameVersions, or: $value.gameVersions),
+    versionType: data.get(#versionType, or: $value.versionType),
+    loaders: data.get(#loaders, or: $value.loaders),
+    featured: data.get(#featured, or: $value.featured),
+    status: data.get(#status, or: $value.status),
+    requestedStatus: data.get(#requestedStatus, or: $value.requestedStatus),
+    primaryFile: data.get(#primaryFile, or: $value.primaryFile),
+  );
+
+  @override
+  CreatableVersionCopyWith<$R2, CreatableVersion, $Out2> $chain<$R2, $Out2>(
+    Then<$Out2, $R2> t,
+  ) => _CreatableVersionCopyWithImpl<$R2, $Out2>($value, $cast, t);
+}
+
