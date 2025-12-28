@@ -10,10 +10,10 @@ part 'enum1.mapper.dart';
 @MappableEnum(defaultValue: 'unknown')
 enum Enum1 {
   /// Incorrect name has been replaced. Original name: `{}`.
-  @MappableValue({}) 
+  @MappableValue(const {}) 
   undefined0,
 
-  @MappableValue(unknown) 
+  @MappableValue('unknown') 
   unknown;
 
   @override

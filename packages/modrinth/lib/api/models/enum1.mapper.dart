@@ -26,9 +26,9 @@ class Enum1Mapper extends EnumMapper<Enum1> {
   @override
   Enum1 decode(dynamic value) {
     switch (value) {
-      case {}:
+      case const {}:
         return Enum1.undefined0;
-      case unknown:
+      case 'unknown':
         return Enum1.unknown;
       default:
         throw MapperException.unknownEnumValue(value);
@@ -39,9 +39,9 @@ class Enum1Mapper extends EnumMapper<Enum1> {
   dynamic encode(Enum1 self) {
     switch (self) {
       case Enum1.undefined0:
-        return {};
+        return const {};
       case Enum1.unknown:
-        return unknown;
+        return 'unknown';
     }
   }
 }
