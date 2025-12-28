@@ -1,3 +1,4 @@
+import 'package:cubestrap/features/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:gamepads/gamepads.dart';
 
@@ -6,6 +7,9 @@ import 'package:gamepads/gamepads.dart';
 class GamepadService {
   static void initialize() async {
     Gamepads.events.listen((event) {
+      final FocusNode? focusedNode = FocusManager.instance.primaryFocus;
+      final BuildContext? focusedContext = focusedNode?.context;
+
       TraversalDirection? direction;
       if (event.value != 0) {
         if (event.key == "6") {
@@ -21,10 +25,27 @@ class GamepadService {
             direction = .down;
           }
         }
+
+        if (event.key == "0") {
+          if (focusedContext != null) {
+            // 3. Manually trigger the 'ActivateIntent'
+            // This is the universal "Select" intent in Flutter
+            Actions.maybeInvoke<ActivateIntent>(
+              focusedContext,
+              const ActivateIntent(),
+            );
+          }
+        }
+
+        if (event.key == "1") {
+          if (routerController.canPop()) {
+            routerController.pop();
+          }
+        }
       }
 
       if (direction != null) {
-        FocusManager.instance.primaryFocus?.focusInDirection(direction);
+        focusedNode?.focusInDirection(direction);
       }
     });
   }

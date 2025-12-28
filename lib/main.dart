@@ -12,7 +12,12 @@ void main() async {
   baseDocumentDirectory = await getApplicationDocumentsDirectory();
   GamepadService.initialize();
 
-  runApp(ProviderScope(child: const Cubestrap()));
+  final container = ProviderContainer();
+  await container.read(cubeClientProvider).initialize();
+
+  runApp(
+    UncontrolledProviderScope(container: container, child: const Cubestrap()),
+  );
 }
 
 class Cubestrap extends ConsumerStatefulWidget {
@@ -23,7 +28,6 @@ class Cubestrap extends ConsumerStatefulWidget {
 }
 
 class _CubestrapState extends ConsumerState<Cubestrap> {
-  bool _initializedApi = false;
   Future<void> login() async {
     final profileId = "96747c1c505a420f843e96109b42c0fa";
     final client = ref.read(cubeClientProvider);
@@ -41,24 +45,7 @@ class _CubestrapState extends ConsumerState<Cubestrap> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    ref.read(cubeClientProvider).initialize().then((_) {
-      setState(() {
-        _initializedApi = true;
-      });
-      login();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (!_initializedApi) {
-      return MaterialApp(
-        home: Center(child: CircularProgressIndicator.adaptive()),
-      );
-    }
-
     return MaterialApp.router(
       title: "Cubestrap",
       theme: ThemeData(
