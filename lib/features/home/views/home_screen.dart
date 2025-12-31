@@ -1,4 +1,5 @@
 import 'package:cubestrap/features/home/components/recent_instances.dart';
+import 'package:cubestrap/features/home/views/segmented_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +20,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 FocusTraversalGroup(
                   child: SizedBox(height: 300, child: RecentInstances()),
+                ),
+                FocusTraversalGroup(
+                  child: Center(
+                    child: SizedBox(width: 500, child: SegmentedBar()),
+                  ),
                 ),
               ],
             ),
