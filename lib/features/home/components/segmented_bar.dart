@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SegmentedBar extends ConsumerStatefulWidget {
-  const SegmentedBar({super.key});
+  final TabController tabController;
+  const SegmentedBar({super.key, required this.tabController});
 
   @override
   ConsumerState<SegmentedBar> createState() => _SegmentedBarState();
@@ -10,20 +11,6 @@ class SegmentedBar extends ConsumerStatefulWidget {
 
 class _SegmentedBarState extends ConsumerState<SegmentedBar>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -41,10 +28,10 @@ class _SegmentedBarState extends ConsumerState<SegmentedBar>
               final tabWidth = constraints.maxWidth / 3;
 
               return AnimatedBuilder(
-                animation: _tabController.animation!,
+                animation: widget.tabController.animation!,
                 builder: (context, child) {
                   final double offset =
-                      _tabController.animation!.value * tabWidth;
+                      widget.tabController.animation!.value * tabWidth;
 
                   return Stack(
                     children: [
@@ -62,7 +49,7 @@ class _SegmentedBarState extends ConsumerState<SegmentedBar>
                       ),
                       Row(
                         children: [
-                          _buildTab(0, 'Instances', tabWidth),
+                          _buildTab(0, 'Modpacks', tabWidth),
                           _buildTab(1, 'Downloads', tabWidth),
                           _buildTab(2, 'Settings', tabWidth),
                         ],
@@ -79,16 +66,16 @@ class _SegmentedBarState extends ConsumerState<SegmentedBar>
   }
 
   Widget _buildTab(int index, String text, double width) {
-    final isSelected = _tabController.index == index;
+    final isSelected = widget.tabController.index == index;
     final colorScheme = Theme.of(context).colorScheme;
 
     return SizedBox(
       width: width,
       child: InkWell(
-        onTap: () => _tabController.animateTo(index),
+        onTap: () => widget.tabController.animateTo(index),
         onFocusChange: (hasFocus) {
           if (hasFocus) {
-            _tabController.animateTo(index);
+            widget.tabController.animateTo(index);
           }
         },
         borderRadius: BorderRadius.circular(12),

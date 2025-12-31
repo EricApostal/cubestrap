@@ -1,5 +1,6 @@
+import 'package:cubestrap/features/home/components/modpacks.dart';
 import 'package:cubestrap/features/home/components/recent_instances.dart';
-import 'package:cubestrap/features/home/views/segmented_bar.dart';
+import 'package:cubestrap/features/home/components/segmented_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,7 +10,15 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 FocusTraversalGroup(
                   child: Center(
-                    child: SizedBox(width: 500, child: SegmentedBar()),
+                    child: SizedBox(
+                      width: 500,
+                      child: SegmentedBar(tabController: _tabController),
+                    ),
                   ),
+                ),
+
+                SizedBox(
+                  height: 500,
+                  child: ModpacksSection(tabController: _tabController),
                 ),
               ],
             ),
