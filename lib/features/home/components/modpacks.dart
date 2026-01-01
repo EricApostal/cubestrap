@@ -86,7 +86,18 @@ class _ModpacksListState extends ConsumerState<ModpacksList> {
             ),
             builderDelegate: PagedChildBuilderDelegate(
               itemBuilder: (context, item, index) {
-                return ImageCard(title: Text(item.title ?? "no title"));
+                return ImageCard(
+                  title: Text(item.title ?? "no title"),
+                  image: SizedBox(
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: Image.network(
+                      item.iconUrl!,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                  ),
+                );
               },
             ),
           ),
