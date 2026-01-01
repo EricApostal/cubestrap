@@ -1,6 +1,5 @@
 import 'package:cubestrap/features/modrinth/components/modpack_card.dart';
 import 'package:cubestrap/features/modrinth/providers/modpacks.dart';
-import 'package:cubestrap/shared/components/card/image_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -21,8 +20,9 @@ class _ModpacksSectionState extends ConsumerState<ModpacksSection> {
     return TabBarView(
       controller: widget.tabController,
       children: [
-        const Center(child: Text("Details Page Content")),
         const ModpacksList(),
+        const Center(child: Text("Details Page Content")),
+
         const Center(child: Text("treeees")),
       ],
     );
@@ -74,23 +74,24 @@ class _ModpacksListState extends ConsumerState<ModpacksList> {
     final width = MediaQuery.sizeOf(context).width;
     return PagingListener(
       controller: _pagingController,
-      builder: (context, state, fetchNextPage) =>
-          PagedGridView<int, ProjectResult>(
-            state: state,
-            fetchNextPage: fetchNextPage,
-            padding: .symmetric(horizontal: 8),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: (width / 300).floor().clamp(1, 20),
-              mainAxisExtent: 300,
-              crossAxisSpacing: 6,
-              mainAxisSpacing: 6,
-            ),
-            builderDelegate: PagedChildBuilderDelegate(
-              itemBuilder: (context, item, index) {
-                return ProjectCard(project: item);
-              },
-            ),
+      builder: (context, state, fetchNextPage) => FocusTraversalGroup(
+        child: PagedGridView<int, ProjectResult>(
+          state: state,
+          fetchNextPage: fetchNextPage,
+          padding: .symmetric(horizontal: 8),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: (width / 300).floor().clamp(1, 20),
+            mainAxisExtent: 300,
+            crossAxisSpacing: 6,
+            mainAxisSpacing: 6,
           ),
+          builderDelegate: PagedChildBuilderDelegate(
+            itemBuilder: (context, item, index) {
+              return ProjectCard(project: item);
+            },
+          ),
+        ),
+      ),
     );
   }
 }

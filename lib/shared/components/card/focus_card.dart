@@ -1,23 +1,23 @@
-import 'package:cubeapi/cubeapi.dart';
-import 'package:cubestrap/shared/components/card/image_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class FocusCard extends ConsumerStatefulWidget {
   final VoidCallback onSelect;
   final Function(BuildContext context, bool focused) childBuilder;
+  final bool autofocus;
+
   const FocusCard({
     super.key,
     required this.onSelect,
     required this.childBuilder,
+    this.autofocus = false,
   });
 
   @override
-  ConsumerState<FocusCard> createState() => _InstanceCardState();
+  ConsumerState<FocusCard> createState() => _FocusCardState();
 }
 
-class _InstanceCardState extends ConsumerState<FocusCard> {
+class _FocusCardState extends ConsumerState<FocusCard> {
   bool _focused = false;
 
   @override
@@ -29,7 +29,7 @@ class _InstanceCardState extends ConsumerState<FocusCard> {
         ),
       },
       child: Focus(
-        autofocus: true,
+        autofocus: widget.autofocus,
         onFocusChange: (value) {
           if (value) {
             Scrollable.ensureVisible(

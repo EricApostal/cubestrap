@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen>
               SliverPersistentHeader(
                 pinned: true,
                 delegate: _SliverAppBarDelegate(
-                  child: FocusTraversalGroup(
+                  child: ExcludeFocus(
                     child: Center(
                       child: Container(
                         color: Theme.of(context).scaffoldBackgroundColor,
