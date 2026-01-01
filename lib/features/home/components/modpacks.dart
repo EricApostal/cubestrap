@@ -52,7 +52,13 @@ class _ModpacksListState extends ConsumerState<ModpacksList> {
       getNextPageKey: (state) =>
           state.lastPageIsEmpty ? null : state.nextIntPageKey,
       fetchPage: (pageKey) async {
-        return _fetchPage(pageKey);
+        try {
+          return _fetchPage(pageKey);
+        } catch (e, st) {
+          print(e);
+          print(st);
+          rethrow;
+        }
       },
     );
   }
@@ -71,15 +77,13 @@ class _ModpacksListState extends ConsumerState<ModpacksList> {
           PagedGridView<int, ProjectResult>(
             state: state,
             fetchNextPage: fetchNextPage,
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 4,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
             ),
             builderDelegate: PagedChildBuilderDelegate(
-              itemBuilder: (context, item, index) => SizedBox(
-                width: 300,
-                height: 300,
-                child: ImageCard(title: Text(item.title ?? "no title")),
-              ),
+              itemBuilder: (context, item, index) {
+                return ImageCard(title: Text(item.title ?? "no title"));
+              },
             ),
           ),
     );

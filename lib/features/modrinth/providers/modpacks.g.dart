@@ -16,7 +16,7 @@ final class ModrinthModpacksProvider
     extends $AsyncNotifierProvider<ModrinthModpacks, SearchResults> {
   ModrinthModpacksProvider._({
     required ModrinthModpacksFamily super.from,
-    required (Ref, {int page}) super.argument,
+    required int super.argument,
   }) : super(
          retry: null,
          name: r'modrinthModpacksProvider',
@@ -32,7 +32,7 @@ final class ModrinthModpacksProvider
   String toString() {
     return r'modrinthModpacksProvider'
         ''
-        '$argument';
+        '($argument)';
   }
 
   @$internal
@@ -50,7 +50,7 @@ final class ModrinthModpacksProvider
   }
 }
 
-String _$modrinthModpacksHash() => r'281e9b94ba8a59fef08798388894d41a7bd409b8';
+String _$modrinthModpacksHash() => r'2854af86fcc3bb1f1336c5dd0e8dd0f5e392125e';
 
 final class ModrinthModpacksFamily extends $Family
     with
@@ -59,7 +59,7 @@ final class ModrinthModpacksFamily extends $Family
           AsyncValue<SearchResults>,
           SearchResults,
           FutureOr<SearchResults>,
-          (Ref, {int page})
+          int
         > {
   ModrinthModpacksFamily._()
     : super(
@@ -70,19 +70,18 @@ final class ModrinthModpacksFamily extends $Family
         isAutoDispose: false,
       );
 
-  ModrinthModpacksProvider call(Ref ref, {required int page}) =>
-      ModrinthModpacksProvider._(argument: (ref, page: page), from: this);
+  ModrinthModpacksProvider call({required int page}) =>
+      ModrinthModpacksProvider._(argument: page, from: this);
 
   @override
   String toString() => r'modrinthModpacksProvider';
 }
 
 abstract class _$ModrinthModpacks extends $AsyncNotifier<SearchResults> {
-  late final _$args = ref.$arg as (Ref, {int page});
-  Ref get ref => _$args.$1;
-  int get page => _$args.page;
+  late final _$args = ref.$arg as int;
+  int get page => _$args;
 
-  FutureOr<SearchResults> build(Ref ref, {required int page});
+  FutureOr<SearchResults> build({required int page});
   @$mustCallSuper
   @override
   void runBuild() {
@@ -95,6 +94,6 @@ abstract class _$ModrinthModpacks extends $AsyncNotifier<SearchResults> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, () => build(_$args.$1, page: _$args.page));
+    element.handleCreate(ref, () => build(page: _$args));
   }
 }

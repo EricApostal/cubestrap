@@ -27,7 +27,7 @@ class ImageCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: .start,
-          mainAxisSize: .min,
+
           children: [
             Spacer(),
             DefaultTextStyle(style: theme.textTheme.titleMedium!, child: title),

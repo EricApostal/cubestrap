@@ -7,8 +7,10 @@ part 'modpacks.g.dart';
 @Riverpod(keepAlive: true)
 class ModrinthModpacks extends _$ModrinthModpacks {
   @override
-  Future<SearchResults> build(Ref ref, {required int page}) async {
+  Future<SearchResults> build({required int page}) async {
     final results = await modrinthClient.projects.searchProjects(offset: page);
+    print("got results");
+    print(results);
     return results;
   }
 }
